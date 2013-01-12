@@ -1,0 +1,15 @@
+---
+layout: post
+title: "用BAE和百度云存储做了个简陋的图片上传应用"
+date: 2013-01-08 11:14
+comments: true
+categories: 
+---
+用BAE和百度云存储做了个简陋的图片存储应用，以后贴图就用这个来保存了。
+
+地址：[http://picfile.duapp.com](http://picfile.duapp.com)
+
+测试一下：
+
+![test picture](http://bcs.duapp.com/picfile/2013/1/c8b1c55b83c19716.jpg)
+

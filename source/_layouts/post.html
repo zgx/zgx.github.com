@@ -1,0 +1,66 @@
+---
+layout: default
+single: true
+---
+
+<div>
+<article class="hentry" role="article">
+  {% include article.html %}
+  {% if page.forward == null %}
+  <p>（完）</p>
+  <p>
+	作者：<a href="{{site.url}}" title="{{ site.author }}">{{ site.author }} </a><br />
+	原文地址：<a href="{{site.url}}{{page.url}}" title="{{page.title}}">{{ site.url }}{{ page.url }}</a>
+  </p>
+  {% endif %}
+  <footer>
+    <p class="meta">
+      {% include post/author.html %}
+      {% include post/date.html %}{% if updated %}{{ updated }}{% else %}{{ time }}{% endif %}
+      {% include post/categories.html %}
+    </p>
+    {% unless page.sharing == false %}
+      {% include post/sharing.html %}
+    {% endunless %}
+    <p class="meta">
+      {% if page.previous.url %}
+        <a class="basic-alignment left" href="{{page.previous.url}}" title="Previous Post: {{page.previous.title}}">&laquo; {{page.previous.title}}</a>
+      {% endif %}
+      {% if page.next.url %}
+        <a class="basic-alignment right" href="{{page.next.url}}" title="Next Post: {{page.next.title}}">{{page.next.title}} &raquo;</a>
+      {% endif %}
+    </p>
+  </footer>
+{% if site.duoshuo_short_name and page.comments == true %}
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+	<script type="text/javascript">
+		var duoshuoQuery = {short_name:"{{ site.duoshuo_short_name }}"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
+{% endif %}
+</article>
+{% if site.disqus_short_name and page.comments == true %}
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
+  </section>
+{% endif %}
+</div>
+{% unless page.sidebar == false %}
+<aside class="sidebar">
+  {% if site.post_asides.size %}
+    {% include_array post_asides %}
+  {% else %}
+    {% include_array default_asides %}
+  {% endif %}
+</aside>
+{% endunless %}
