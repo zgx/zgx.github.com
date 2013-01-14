@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://zgx.github.com/atom.xml" rel="self"/>
   <link href="http://zgx.github.com/"/>
-  <updated>2013-01-14T10:05:27+08:00</updated>
+  <updated>2013-01-14T10:11:47+08:00</updated>
   <id>http://zgx.github.com/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -202,8 +202,8 @@ Github可以解析符合Jekyll规范的网站源码。</p>
 
 <p>按照Github的<a href="https://help.github.com/articles/user-organization-and-project-pages">文档</a>，
 <del>建立一个与用户名相同的仓库，把页面传到master分支，就可以用http://username.github.com/访问，
-不过我试了下，没有成功(404)，有谁能指导下吗？</del>我理解错了，是建立一个名为<code>username.github.com</code>
-(把username替换成你额用户名)，把页面放在master分支，就可以用<code>http:username.github.com</code>访问。
+不过我试了下，没有成功(404)，有谁能指导下吗？</del>我理解错了，是建立一个名为<code>username.github.com</code>的仓库
+(把username替换成你的用户名)，把页面放在master分支，就可以用<code>http://username.github.com</code>访问。
 已试验成功。</p>
 
 <p>好嘞，博客搭建完成。请在<a href="http://hswg.info/" title="横竖弯钩的博客">这里</a>看下效果：<a href="http://hswg.info/" title="横竖弯钩的博客">http://hswg.info</a></p>
