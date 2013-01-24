@@ -1,0 +1,1400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[横竖弯钩]]></title>
+  <link href="http://zgx.github.com/atom.xml" rel="self"/>
+  <link href="http://zgx.github.com/"/>
+  <updated>2013-01-24T16:55:52+08:00</updated>
+  <id>http://zgx.github.com/</id>
+  <author>
+    <name><![CDATA[横竖弯钩]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[用Ajax方式上传文件]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/21/upload-files-with-ajax/"/>
+    <updated>2013-01-21T19:03:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/21/upload-files-with-ajax</id>
+    <content type="html"><![CDATA[<p>在HTML5出现之前，无刷新文件上传的思路一般是使用frame或flash。有一天，HTML5
+带来了XMLHttpRequest第二版，它为Ajax上传文件带来的可能。所以，如果还要支持
+IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
+
+<!--more-->
+
+
+<p><img src="http://bcs.duapp.com/picfile/2013/1/b87d6d2069d4e7f1.png" alt="Alt Ajax上传图片" /></p>
+
+<p>实现Ajax上传文件要用到两个对象：FormData, XMLHttpRequest。下面介绍这两个对象。</p>
+
+<h3>FormData</h3>
+
+<p>HTML5增加了一个FormData对象，FormData对象的作用是模拟表单数据，然后就可以用
+Ajax的方式提交这个表单的数据，跟用正常方式提交表单一样。是不是很方便。</p>
+
+<p>使用FormData的方式：</p>
+
+<pre><code>var formData = new FormData();          //new一个表单对象
+formData.append('field1', 'value1');    //添加一个name为'field1',值为'value1'的表单项表单项
+formData.append('id', '123456');        //添加一个name为'id'的表单项
+</code></pre>
+
+<p>我们可以使用Ajax上传文件的一个基础就是，FormData可以包含文件表单项。如我们有选择文件的表单：</p>
+
+<pre><code>&lt;input type="file" id='selfile'&gt;
+</code></pre>
+
+<p>我们可以这样把它添加进FormData对象。</p>
+
+<pre><code>var file = document.getElementById("selfile").files[0];
+formData.append('picfile', file);
+</code></pre>
+
+<p>FormData了解到这里已经足够了，下面就要的就是把&#8217;formData&#8217;发送到服务器。这就要用到<em>XMLHttpRequest</em>对象了。</p>
+
+<h3>XMLHttpRequest对象</h3>
+
+<p>XMLHttpRequest对象是Ajax的基础，用于在浏览器与服务器交换数据。</p>
+
+<p>XMLHttpRequest的用法：</p>
+
+<pre><code>var xhr = new XMLHttpRequest(); //新建一个XMLHttpRequest对象
+xhr.open('POST', '/jsUpload');  //表单提交的地址
+xhr.onload = function(){        //当服务器返回时，会调用函数
+    if(xhr.status == 200){
+        console.log('上传成功');
+    }
+    else{
+        console.log('好像出错了，你查查呗'）；
+    }
+}
+//假定已经有formData对象
+xhr.onload.send(formData);      //发送数据
+</code></pre>
+
+<h3>进度条支持</h3>
+
+<p>XMLHttpRequest第二版还增加了一个<code>onprogress</code>回调接口。有了这个实现进度条就很简单了。</p>
+
+<h3>完整的示例</h3>
+
+<p>HTML文件添加选择文件的表单。</p>
+
+<pre><code>&lt;input type="file" id='selfile'&gt;
+</code></pre>
+
+<p>Javascript监听表单的改变事件，并在这个时间上传文件。</p>
+
+<pre><code>var selFile = $('#selFile');
+selFile.change(function(e){
+    if(window.FormData){        //判断浏览器是否支持FormData对象
+        var formData = new FormData();
+        var file = e.target.files[0];
+        formData.append('picfile', file);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/jsUpload');
+
+        xhr.onload = function(){
+            alert('上传完成');
+
+            if(xhr.status &lt; 200 || xhr.status &gt; 299){
+                alert('好像出了点问题');
+            }
+        }
+
+        xhr.upload.onprogress = function (e){
+            console.log('上传了....' + e.loaded / e.total * 100 + '%');          //进度信息
+        }
+
+        xhr.send(formData);
+    }
+});
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress技巧之设置关键字和描述]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress/"/>
+    <updated>2013-01-11T21:39:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress</id>
+    <content type="html"><![CDATA[<h3>关键字和描述</h3>
+
+<p>这里所说的关键字和描述是指网页<code>head</code>部分的元标签<code>meta</code>，是给搜索引擎看的，以此希望用户可以比较容易找到本站。
+在html上就是面所示的标签：</p>
+
+<!--more-->
+
+
+<pre><code>&lt;meta name="description" content="横竖弯钩是一个关注IT技术的博客"&gt;
+&lt;meta name="keywords" content="IT, 编程, 码农的自嘲"&gt;
+</code></pre>
+
+<h3>Octopress设置关键字和描述的方法</h3>
+
+<p>那么在Octopress的模板是怎么在页面设置这两个字段的呢？我们先看代码。打开文件: <code>source/_include/head.html</code>。
+找到设置“description”和“keywords”的地方：</p>
+
+<pre><code>{% capture description %}
+  {% if page.description %}
+    {{ page.description }}
+  {% else %}
+    {{ content | raw_content }}
+  {% endif %}
+{% endcapture %}
+&lt;meta name="description" 
+    content="{{ description | strip_html | condense_spaces | truncate:150 }}"&gt;
+
+{% if page.keywords %}&lt;meta name="keywords" content="{{ page.keywords }}"&gt;{% endif %}
+</code></pre>
+
+<p>可以看出，“description”是取的是页面上的<code>description</code>字段, 就是在文件顶部被<code>---</code>包围起来的内容，关键字同样如此。
+也就是说我们可以在每篇博客设置不同的关键和描述。</p>
+
+<pre><code>---
+layout: post
+title: "文章的标题"
+date: 2013-01-11 22:00
+description: "在这里写上描述"
+keywords: 关键字1，关键字2
+comments: true
+categories: 
+---
+###你的博客
+你的博客正文
+</code></pre>
+
+<p>如上面的格式填上描述和关键字，Octopress帮你生成这一篇博客的页面就会包含你设置的关键字和描述了。如果你没有手动设置的话
+，模板会帮你截取正文的一部分作为描述，至于关键字这个标签就没有了。</p>
+
+<h3>首页如何设置</h3>
+
+<p>从模板代码我发现了，它没有对首页做特殊处理。通常我们需要在首页写上作为全站的描述和关键字，而模板默认的行为是在第一篇博客截取
+一部分作为描述。这显然不是我们要的结果。</p>
+
+<p>那怎么办呢？在这个问题我走了一些冤枉路。大致过程就是在配置文件<code>_config.yml</code>增加这两个字段，然后修改模板，判断如果是首页就
+取全局配置的关键字和描述。</p>
+
+<p>虽然改起来很简单，但是后来我发现了更简单的方法，在这里分享下。其实首页也是一个页面，也会有上面提到的普通文章页面的配置信息。
+<em>只要修改index.html</em>就可以了。
+打开source/index.html，如下设置：</p>
+
+<pre><code>---
+layout: default
+description: "只是一个你们搜索引擎都没收录的网站，你说我是瞎折腾么"
+keywords: 技术，码农，单身, 单身，真的是单身
+---
+</code></pre>
+
+<p>OK，就怎么简单。不过不要学上面的堆砌关键字，话说谷歌百度之流不喜欢。</p>
+
+<h3>举一反三</h3>
+
+<ol>
+<li>对于网站其他页面，都可以用这个方法设置关键字和描述</li>
+<li>页面上的配置信息，我们可以添加自己的字段进去，在模板用<code>page.[字段名]</code>就可以访问了。这样你就可以给每篇加上额外的信息了。
+如<code>hide</code>:不显示；<code>forward</code>:转发。然后就可以在模板加上个性功能了。</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[可爱的雪人]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/10/lovely-snowman/"/>
+    <updated>2013-01-10T20:52:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/10/lovely-snowman</id>
+    <content type="html"><![CDATA[<p>这是前几天晚上拍的照片，现在翻出来，突然发现挺好看的。贴出来分享下。</p>
+
+<!--more-->
+
+
+<p><img src="http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg" alt="lovely snownam'" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[把博客放在Github]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/10/bloging-on-github/"/>
+    <updated>2013-01-10T09:09:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/10/bloging-on-github</id>
+    <content type="html"><![CDATA[<p>故事是这样的，我开始想要在vim写博客，找到Markdown是写技术博客的很好用的一种标记语言，
+同时发现Github Pages可以托管用Markdown写的博客站点，然后就尝试在Github写博客。</p>
+
+<!--more-->
+
+
+<h3>Markdown</h3>
+
+<p>Markdown 是一种轻量级标记语言，创始人为John Gruber和Aaron Swartz。它允许人们“使用易读易写的纯文本格式编写文档，
+然后转换成有效的XHTML(或者HTML)文档”。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性。
+Github的README.md文件就是用Markdown格式写的。在这里<a href="http://hswg.info/blog/2013/01/01/markdown/">了解Markdown语法</a>的语法，学习10分钟就可以用它写博客了，是不是很简单。</p>
+
+<h3>Github Pages</h3>
+
+<p>然后很自然的了解到了<a href="http://pages.github.com/">Github Pages</a>。Github设计了Pages功能，允许用户自定义用户首页，和项目首页。也就是说，
+用户可以把静态页面托管到Github。当然，Github Pages的功能不止是托管静态页面，否则用html写博客，同时还要关注样式那是无法接受的。
+Github Pages同时提供了模板功能，可以用解析引擎是Jekyll。</p>
+
+<p>一句话教程：</p>
+
+<blockquote><p>在gh-pages分支add一个index.html文件，push到github，访问<code>http://username.github.com/projectname/</code>就可以看见你发布的网页了。</p></blockquote>
+
+<p>很重要一点，Github Pages支持<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">绑定域名</a>。</p>
+
+<h3>Jekyll</h3>
+
+<p>Jekyll是一个静态站点生成器，它会根据网页源码生成静态文件。它提供了模板、变量、插件等功能，不需要数据库，文章可以使用Markdown、HTML、Textile格式的文件保存。
+Github可以解析符合Jekyll规范的网站源码。</p>
+
+<p>使用上面说的仨，你就可以建立很酷的博客了，这个博客的特点是：</p>
+
+<blockquote><ul>
+<li>完善的版本管理，你可以找回你每一次新增、修改的信息。</li>
+<li>在Github你可以有免费、无限的流量。</li>
+<li>使用你喜欢的编辑器写博客，使用简洁的Markdown，不必在忍受在线编辑器。</li>
+<li>绑定自己的域名。</li>
+<li>当然，这样做很酷。</li>
+</ul>
+</blockquote>
+
+<h3>Octopress</h3>
+
+<p>使用上面的方案你就可以DIY你个人博客的每一部分。
+从零开始不是多数人的选择，你可以参考开源的<a href="https://github.com/mojombo/jekyll/wiki/Sites">Jekyll模板</a>。
+当然，你还可以选择Octopress。使用Octopress的方案也用到了上面的仨，不一样的地方在于Jekyll生成静态页面的过程发生在本地。使用它提供的发布命令<code>rake deploy</code>即可发布到github。
+这样做带来的好处有：</p>
+
+<blockquote><ul>
+<li>有一系列便捷的命令负责生成、预览、发布、新建文章、新建页面等等。</li>
+<li>有本地预览功能。</li>
+<li>有一套还算美观的模版，这个模板修改起来还是很方便的。</li>
+<li>网站源码和静态页面分离。可以在git以不同分支管理。</li>
+</ul>
+</blockquote>
+
+<p>搭建Octopress参考<a href="http://octopress.org/docs/">官方文档</a>即可，在Linux下搭建还是很简单的。
+在windows下，我的选择是在Cygwin下搭建，
+中途出了点小问题，如果你要这样做，建议参考下：
+<a href="http://hswg.info/blog/2013/01/07/octopress-on-cygwin/">在Cygwin搭建Octopress</a>,
+这是在windows下的一个选择。直接在Windows安装也是可以的，只是我不喜欢使用Windows那烂得不行的Cmd。</p>
+
+<h3>社会化评论</h3>
+
+<p>大家或许想到了，静态页面怎么能有评论功能？一个答案就是社会化评论系统。
+社会话评论系统的好处是方便管理，降低网站复杂度，分享功能有助网站推广。
+坏处也很明显，数据不可控。当下，社会化评论是一个趋势。
+<a href="http://hswg.info/blog/2013/01/09/using-social-comment/">这是</a>我在Octopress使用社会化评论的过程。</p>
+
+<h3>域名</h3>
+
+<p>访问部署在github的页面使用的网站是：<code>http://username.github.com/projectname/</code>。你也可以绑定自己的域名。
+在Github Pages使用域名很方便。步骤如下：</p>
+
+<ol>
+<li>让网站根目录，也就是gh-pages分支的根目录，新建一个叫<code>CNAME</code>的文件,里面写上自己的域名。</li>
+<li>如果绑定顶级域名，新建A记录指向<code>204.232.175.78</code>（这是Github的<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">文档</a>给出的，也许已经改变）</li>
+<li>如果绑定二级域名，修改CNAME指向<code>username.github.com</code>即可。</li>
+</ol>
+
+
+<h3>再补充一点</h3>
+
+<p>按照Github的<a href="https://help.github.com/articles/user-organization-and-project-pages">文档</a>，
+<del>建立一个与用户名相同的仓库，把页面传到master分支，就可以用http://username.github.com/访问，
+不过我试了下，没有成功(404)，有谁能指导下吗？</del>我理解错了，是建立一个名为<code>username.github.com</code>的仓库
+(把username替换成你的用户名)，把页面放在master分支，就可以用<code>http://username.github.com</code>访问。
+已试验成功。</p>
+
+<p>好嘞，博客搭建完成。请在<a href="http://hswg.info/" title="横竖弯钩的博客">这里</a>看下效果：<a href="http://hswg.info/" title="横竖弯钩的博客">http://hswg.info</a></p>
+
+<p>如果你有兴趣，也可以参考阮一峰的博客:
+<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">搭建一个免费的，无限流量的Blog&#8212;-github Pages和Jekyll入门</a></p>
+
+<p>对了，这篇文章就是用Markdown写的。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Otcopress使用社会化评论]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/09/using-social-comment/"/>
+    <updated>2013-01-09T00:15:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/09/using-social-comment</id>
+    <content type="html"><![CDATA[<p><em>在octopress中使用disqus很简单</em>，只要修改在配置文件“_config.yalm”：</p>
+
+<pre><code># Disqus Comments
+disqus_short_name: your_short_name  #在这里输入你在disqus注册时申请的short name
+disqus_show_comment_count: false
+</code></pre>
+
+<!--more-->
+
+
+<p>octopress的默认模板就会检测到<code>disqus_short_name</code>配置的存在，就会把Disqus评论插件显示出来了。
+在文件<code>source/_layouts/post.html</code>,下面的代码就是负责把Disqus显示出来的。</p>
+
+<p><img src="http://bcs.duapp.com/picfile/2013/1/de86c60b1e7b51f1.png" alt="disqus" />
+这是默认配置下的Disqus的界面，可以出是英语的，目前语言也没有中文可配置。不过对我们博客的访客来说很大问题。
+关键的问题是它支持社交平台都是墙外之物，或许以后Disqus跟它们混了，点了这伙就跑出来了：
+<img src="http://bcs.duapp.com/picfile/2013/1/575181cb7965ec37.png" alt="404" /></p>
+
+<p>目光转向国内。而目前业界提供这类方案的网站有友言(jiathis旗下产品)、评论啦、多说、Denglu评论(灯鹭旗下产品)。
+最早听说的是“多说”，先<em>使用多说</em>。先上图：
+<img src="http://bcs.duapp.com/picfile/2013/1/ff0d42b3f55937b0.png" alt="多说" /></p>
+
+<p>国内土产就是不一样，中国特色主流社交帐号都可以登录，可以无障碍的在社交平台分享对博客来说还是很有意义的。
+Octopress当然没有对多说内置支持，不过在模板添加进去还是很容易的。在刚才的Disqus插件代码上面，添加如下代码。</p>
+
+<pre><code>&lt;!-- Duoshuo Comment BEGIN --&gt;
+    &lt;div class="ds-thread"&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;
+    var duoshuoQuery = {short_name:"your_short_name"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    &lt;/script&gt;
+&lt;!-- Duoshuo Comment END --&gt;
+</code></pre>
+
+<p>多说也是使用了short_name这个字段，short_name需要你到<a href="http://duoshuo.com/">多说</a>申请。我们可以参考Octopress的方法使用配置和插件的方式来使用多说，不过过度设计不是我的风格。
+这样就赶上潮流，使用了一把设计化评论。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[vim技巧之复制粘贴]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/08/vim-clipboard/"/>
+    <updated>2013-01-08T13:37:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/08/vim-clipboard</id>
+    <content type="html"><![CDATA[<h3>快速参考</h3>
+
+<ul>
+<li>粘贴系统剪切板的内容按<code>Shift+Insert</code>就可以了</li>
+<li>使用<code>:reg</code>命令查看各个剪切板缓冲区的内容</li>
+<li>粘贴命令是<code>p</code></li>
+<li>粘贴剪贴板9的内容：<code>"9p</code>;如果有安装gvim，命令<code>"+p</code>可以粘贴系统前切板内容</li>
+<li><code>yy</code>是复制一行</li>
+<li>先按<code>v</code>，移动光标选中内容，按<code>y</code>可以复制选中区块</li>
+<li><code>"7y</code>表示复制内容到剪切板7</li>
+</ul>
+
+
+<!--more-->
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用BAE和百度云存储做了个简陋的图片上传应用]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/08/bae-pic/"/>
+    <updated>2013-01-08T11:14:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/08/bae-pic</id>
+    <content type="html"><![CDATA[<p>用BAE和百度云存储做了个简陋的图片存储应用，以后贴图就用这个来保存了。</p>
+
+<p>地址：<a href="http://picfile.duapp.com">http://picfile.duapp.com</a></p>
+
+<p>测试一下：</p>
+
+<p><img src="http://bcs.duapp.com/picfile/2013/1/c8b1c55b83c19716.jpg" alt="test picture" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Cygwin搭建Octopress]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/"/>
+    <updated>2013-01-07T15:03:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin</id>
+    <content type="html"><![CDATA[<p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
+当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
+
+<!--more-->
+
+
+<ol>
+<li>直接用Cygwin setup.exe安装Ruby，目前的版本就是文档要求的1.9.3，OK。</li>
+<li>安装bundler
+
+<pre><code> gem install bundler
+</code></pre></li>
+<li>进入octopress目录，执行bundle install
+
+<pre><code> cd octopress
+ bundle install
+</code></pre>
+
+问题出现了，关键提示如下：
+
+<pre><code> posix-spawn.c:9:19: 致命错误：spawn.h：No such file or directory
+</code></pre></li>
+<li>上面的问题是由于posix-spawn的bug引起的，需要自己编译安装：
+
+<pre><code> gem install rake-compiler -v 0.7.6
+ git clone git://github.com/rtomayko/posix-spawn.git
+ cd posix-spawn
+ rake gem
+ gem install pkg/posix-spawn-0.3.6
+</code></pre></li>
+<li>再执行<code>bundle install</code>就没用问题了。</li>
+<li>享受octopress吧.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[linux笔记]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/07/linux-notes/"/>
+    <updated>2013-01-07T11:27:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/07/linux-notes</id>
+    <content type="html"><![CDATA[<p>设置系统代理</p>
+
+<pre><code>export http_proxy=http://user:password@host:port
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python笔记]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/06/python-notes/"/>
+    <updated>2013-01-06T20:22:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/06/python-notes</id>
+    <content type="html"><![CDATA[<p>一些个人关于python的笔记</p>
+
+<!--more-->
+
+
+<p>python源文件包含非ASCII字符时，需要包含编码声明，文件是utf-8时，声明如下</p>
+
+<pre><code># -*- coding: utf-8 -*-
+</code></pre>
+
+<p>tornado处理上传的文件</p>
+
+<pre><code>class Upload(RequestHandler):
+    def post(self):
+        if self.request.files and 'picfile' in self.request.files:
+            fobj = self.request.files['picfile'][0]
+            #fobj是一个字典，键值有：filename, body, content_type
+            #根据情况处理fobj就是了
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用Octopress写博客]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/04/using-octopress/"/>
+    <updated>2013-01-04T14:50:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/04/using-octopress</id>
+    <content type="html"><![CDATA[<p>用了一下,总结几点吧：</p>
+
+<ol>
+<li>在本地生成Html</li>
+<li>使用Jekyll生成</li>
+<li>不觉得比在Github用Jekyll输出高明多少</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Markdown语法]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/01/markdown/"/>
+    <updated>2013-01-01T20:22:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/01/markdown</id>
+    <content type="html"><![CDATA[<!--more-->
+
+
+<ul>
+<li><a href="#overview">概述</a>
+
+<ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容 HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a>
+
+<ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a>
+
+<ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其它</a>
+
+<ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
+</ul>
+</li>
+<li><a href="#acknowledgement">感谢</a></li>
+<li><a href="#editor">Markdown 免费编辑器</a></li>
+</ul>
+
+
+<hr />
+
+<h2 id="overview">概述</h2>
+
+
+
+
+<h3 id="philosophy">宗旨</h3>
+
+
+<p>Markdown 的目标是实现「易读易写」。</p>
+
+<p>可读性，无论如何，都是最重要的。一份使用 Markdown 格式撰写的文件应该可以直接以纯文本发布，并且看起来不会像是由许多标签或是格式指令所构成。Markdown 语法受到一些既有 text-to-HTML 格式的影响，包括 <a href="http://docutils.sourceforge.net/mirror/setext.html">Setext</a>、<a href="http://www.aaronsw.com/2002/atx/">atx</a>、<a href="http://textism.com/tools/textile/">Textile</a>、<a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>、<a href="http://www.triptico.com/software/grutatxt.html">Grutatext</a> 和 <a href="http://ettext.taint.org/doc/">EtText</a>，而最大灵感来源其实是纯文本电子邮件的格式。</p>
+
+<p>总之， Markdown 的语法全由一些符号所组成，这些符号经过精挑细选，其作用一目了然。比如：在文字两旁加上星号，看起来就像*强调*。Markdown 的列表看起来，嗯，就是列表。Markdown 的区块引用看起来就真的像是引用一段文字，就像你曾在电子邮件中见过的那样。</p>
+
+<h3 id="html">兼容 HTML</h3>
+
+
+<p>Markdown 语法的目标是：成为一种适用于网络的<em>书写</em>语言。</p>
+
+<p>Markdown 不是想要取代 HTML，甚至也没有要和它相近，它的语法种类很少，只对应 HTML 标记的一小部分。Markdown 的构想<em>不是</em>要使得 HTML 文档更容易书写。在我看来， HTML 已经很容易写了。Markdown 的理念是，能让文档更容易读、写和随意改。HTML 是一种<em>发布</em>的格式，Markdown 是一种<em>书写</em>的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围。</p>
+
+<p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。</p>
+
+<p>要制约的只有一些 HTML 区块元素――比如 <code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code> 等标签，必须在前后加上空行与其它内容区隔开，还要求它们的开始标签与结尾标签不能用制表符或空格来缩进。Markdown 的生成器有足够智能，不会在 HTML 区块标签外加上不必要的 <code>&lt;p&gt;</code> 标签。</p>
+
+<p>例子如下，在 Markdown 文件里加上一段 HTML 表格：</p>
+
+<pre><code>这是一个普通段落。
+
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Foo&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+这是另一个普通段落。
+</code></pre>
+
+<p>请注意，在 HTML 区块标签间的 Markdown 格式语法将不会被处理。比如，你在 HTML 区块内使用 Markdown 样式的<code>*强调*</code>会没有效果。</p>
+
+<p>HTML 的区段（行内）标签如 <code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code> 可以在 Markdown 的段落、列表或是标题里随意使用。依照个人习惯，甚至可以不用 Markdown 格式，而直接采用 HTML 标签来格式化。举例说明：如果比较喜欢 HTML 的 <code>&lt;a&gt;</code> 或 <code>&lt;img&gt;</code> 标签，可以直接使用这些标签，而不用 Markdown 提供的链接或是图像标签语法。</p>
+
+<p>和处在 HTML 区块标签间不同，Markdown 语法在 HTML 区段标签间是有效的。</p>
+
+<h3 id="autoescape">特殊字符自动转换</h3>
+
+
+<p>在 HTML 文件中，有两个字符需要特殊处理： <code>&lt;</code> 和 <code>&amp;</code> 。 <code>&lt;</code> 符号用于起始标签，<code>&amp;</code> 符号则用于标记 HTML 实体，如果你只是想要显示这些字符的原型，你必须要使用实体的形式，像是 <code>&amp;lt;</code> 和 <code>&amp;amp;</code>。</p>
+
+<p><code>&amp;</code> 字符尤其让网络文档编写者受折磨，如果你要打「<code>AT&amp;T</code>」 ，你必须要写成「<code>AT&amp;amp;T</code>」。而网址中的 <code>&amp;</code> 字符也要转换。比如你要链接到：</p>
+
+<pre><code>http://images.google.com/images?num=30&amp;q=larry+bird
+</code></pre>
+
+<p>你必须要把网址转换写为：</p>
+
+<pre><code>http://images.google.com/images?num=30&amp;amp;q=larry+bird
+</code></pre>
+
+<p>才能放到链接标签的 <code>href</code> 属性里。不用说也知道这很容易忽略，这也可能是 HTML 标准检验所检查到的错误中，数量最多的。</p>
+
+<p>Markdown 让你可以自然地书写字符，需要转换的由它来处理好了。如果你使用的 <code>&amp;</code> 字符是 HTML 字符实体的一部分，它会保留原状，否则它会被转换成 <code>&amp;amp</code>;。</p>
+
+<p>所以你如果要在文档中插入一个版权符号 <code>©</code>，你可以这样写：</p>
+
+<pre><code>&amp;copy;
+</code></pre>
+
+<p>Markdown 会保留它不动。而若你写：</p>
+
+<pre><code>AT&amp;T
+</code></pre>
+
+<p>Markdown 就会将它转为：</p>
+
+<pre><code>AT&amp;amp;T
+</code></pre>
+
+<p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 允许 <a href="#html">兼容 HTML</a> ，如果你是把 <code>&lt;</code> 符号作为 HTML 标签的定界符使用，那 Markdown 也不会对它做任何转换，但是如果你写：</p>
+
+<pre><code>4 &lt; 5
+</code></pre>
+
+<p>Markdown 将会把它转换为：</p>
+
+<pre><code>4 &amp;lt; 5
+</code></pre>
+
+<p>不过需要注意的是，code 范围内，不论是行内还是区块， <code>&lt;</code> 和 <code>&amp;</code> 两个符号都<em>一定</em>会被转换成 HTML 实体，这项特性让你可以很容易地用 Markdown 写 HTML code （和 HTML 相对而言， HTML 语法中，你要把所有的 <code>&lt;</code> 和 <code>&amp;</code> 都转换为 HTML 实体，才能在 HTML 文件里面写出 HTML code。）</p>
+
+<hr />
+
+<h2 id="block">区块元素</h2>
+
+
+
+
+<h3 id="p">段落和换行</h3>
+
+
+<p>一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。</p>
+
+<p>「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <code>&lt;br /&gt;</code> 标签。</p>
+
+<p>如果你<em>确实</em>想要依赖 Markdown 来插入 <code>&lt;br /&gt;</code> 标签的话，在插入处先按入两个以上的空格然后回车。</p>
+
+<p>的确，需要多费点事（多加空格）来产生 <code>&lt;br /&gt;</code> ，但是简单地「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="#blockquote">区块引用</a> 和多段落的 <a href="#list">列表</a> 在使用换行来排版的时候，不但更好用，还更方便阅读。</p>
+
+<h3 id="header">标题</h3>
+
+
+<p>Markdown 支持两种标题的语法，类 <a href="http://docutils.sourceforge.net/mirror/setext.html">Setext</a> 和类 <a href="http://www.aaronsw.com/2002/atx/">atx</a> 形式。</p>
+
+<p>类 Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），例如：</p>
+
+<pre><code>This is an H1
+=============
+
+This is an H2
+-------------
+</code></pre>
+
+<p>任何数量的 <code>=</code> 和 <code>-</code> 都可以有效果。</p>
+
+<p>类 Atx 形式则是在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶，例如：</p>
+
+<pre><code># 这是 H1
+
+## 这是 H2
+
+###### 这是 H6
+</code></pre>
+
+<p>你可以选择性地「闭合」类 atx 样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上 <code>#</code>，而行尾的 <code>#</code> 数量也不用和开头一样（行首的井字符数量决定标题的阶数）：</p>
+
+<pre><code># 这是 H1 #
+
+## 这是 H2 ##
+
+### 这是 H3 ######
+</code></pre>
+
+<h3 id="blockquote">区块引用 Blockquotes</h3>
+
+
+<p>Markdown 标记区块引用是使用类似 email 中用 <code>&gt;</code> 的引用方式。如果你还熟悉在 email 信件中的引言部分，你就知道怎么在 Markdown 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行的最前面加上 <code>&gt;</code> ：</p>
+
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+&gt; 
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+&gt; id sem consectetuer libero luctus adipiscing.
+</code></pre>
+
+<p>Markdown 也允许你偷懒只在整个段落的第一行最前面加上 <code>&gt;</code> ：</p>
+
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+</code></pre>
+
+<p>区块引用可以嵌套（例如：引用内的引用），只要根据层次加上不同数量的 <code>&gt;</code> ：</p>
+
+<pre><code>&gt; This is the first level of quoting.
+&gt;
+&gt; &gt; This is nested blockquote.
+&gt;
+&gt; Back to the first level.
+</code></pre>
+
+<p>引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等：</p>
+
+<pre><code>&gt; ## 这是一个标题。
+&gt; 
+&gt; 1.   这是第一行列表项。
+&gt; 2.   这是第二行列表项。
+&gt; 
+&gt; 给出一些例子代码：
+&gt; 
+&gt;     return shell_exec("echo $input | $markdown_script");
+</code></pre>
+
+<p>任何像样的文本编辑器都能轻松地建立 email 型的引用。例如在 BBEdit 中，你可以选取文字后然后从选单中选择<em>增加引用阶层</em>。</p>
+
+<h3 id="list">列表</h3>
+
+
+<p>Markdown 支持有序列表和无序列表。</p>
+
+<p>无序列表使用星号、加号或是减号作为列表标记：</p>
+
+<pre><code>*   Red
+*   Green
+*   Blue
+</code></pre>
+
+<p>等同于：</p>
+
+<pre><code>+   Red
++   Green
++   Blue
+</code></pre>
+
+<p>也等同于：</p>
+
+<pre><code>-   Red
+-   Green
+-   Blue
+</code></pre>
+
+<p>有序列表则使用数字接着一个英文句点：</p>
+
+<pre><code>1.  Bird
+2.  McHale
+3.  Parish
+</code></pre>
+
+<p>很重要的一点是，你在列表标记上使用的数字并不会影响输出的 HTML 结果，上面的列表所产生的 HTML 标记为：</p>
+
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;McHale&lt;/li&gt;
+&lt;li&gt;Parish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+
+<p>如果你的列表标记写成：</p>
+
+<pre><code>1.  Bird
+1.  McHale
+1.  Parish
+</code></pre>
+
+<p>或甚至是：</p>
+
+<pre><code>3. Bird
+1. McHale
+8. Parish
+</code></pre>
+
+<p>你都会得到完全相同的 HTML 输出。重点在于，你可以让 Markdown 文件的列表数字和输出的结果相同，或是你懒一点，你可以完全不用在意数字的正确性。</p>
+
+<p>如果你使用懒惰的写法，建议第一个项目最好还是从 1. 开始，因为 Markdown 未来可能会支持有序列表的 start 属性。</p>
+
+<p>列表项目标记通常是放在最左边，但是其实也可以缩进，最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
+
+<p>要让列表看起来更漂亮，你可以把内容用固定的缩进整理好：</p>
+
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+
+<p>但是如果你懒，那也行：</p>
+
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+
+<p>如果列表项目间用空行分开，在输出 HTML 时 Markdown 就会将项目内容用 <code>&lt;p&gt;</code>
+标签包起来，举例来说：</p>
+
+<pre><code>*   Bird
+*   Magic
+</code></pre>
+
+<p>会被转换为：</p>
+
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;Magic&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>但是这个：</p>
+
+<pre><code>*   Bird
+
+*   Magic
+</code></pre>
+
+<p>会被转换为：</p>
+
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>列表项目可以包含多个段落，每个项目下的段落都必须缩进 4 个空格或是 1 个制表符：</p>
+
+<pre><code>1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+
+<p>如果你每行都有缩进，看起来会看好很多，当然，再次地，如果你很懒惰，Markdown 也允许：</p>
+
+<pre><code>*   This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+*   Another item in the same list.
+</code></pre>
+
+<p>如果要在列表项目内放进引用，那 <code>&gt;</code> 就需要缩进：</p>
+
+<pre><code>*   A list item with a blockquote:
+
+    &gt; This is a blockquote
+    &gt; inside a list item.
+</code></pre>
+
+<p>如果要放代码区块的话，该区块就需要缩进<em>两次</em>，也就是 8 个空格或是 2 个制表符：</p>
+
+<pre><code>*   一列表项包含一个列表区块：
+
+        &lt;代码写在这&gt;
+</code></pre>
+
+<p>当然，项目列表很可能会不小心产生，像是下面这样的写法：</p>
+
+<pre><code>1986. What a great season.
+</code></pre>
+
+<p>换句话说，也就是在行首出现<em>数字-句点-空白</em>，要避免这样的状况，你可以在句点前面加上反斜杠。</p>
+
+<pre><code>1986\. What a great season.
+</code></pre>
+
+<h3 id="precode">代码区块</h3>
+
+
+<p>和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块，通常这些区块我们并不希望它以一般段落文件的方式去排版，而是照原来的样子显示，Markdown 会用 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标签来把代码区块包起来。</p>
+
+<p>要在 Markdown 中建立代码区块很简单，只要简单地缩进 4 个空格或是 1 个制表符就可以，例如，下面的输入：</p>
+
+<pre><code>这是一个普通段落：
+
+    这是一个代码区块。
+</code></pre>
+
+<p>Markdown 会转换成：</p>
+
+<pre><code>&lt;p&gt;这是一个普通段落：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;这是一个代码区块。
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>这个每行一阶的缩进（4 个空格或是 1 个制表符），都会被移除，例如：</p>
+
+<pre><code>Here is an example of AppleScript:
+
+    tell application "Foo"
+        beep
+    end tell
+</code></pre>
+
+<p>会被转换为：</p>
+
+<pre><code>&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tell application "Foo"
+    beep
+end tell
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>一个代码区块会一直持续到没有缩进的那一行（或是文件结尾）。</p>
+
+<p>在代码区块里面， <code>&amp;</code> 、 <code>&lt;</code> 和 <code>&gt;</code> 会自动转成 HTML 实体，这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码，只需要复制贴上，再加上缩进就可以了，剩下的 Markdown 都会帮你处理，例如：</p>
+
+<pre><code>    &lt;div class="footer"&gt;
+        &amp;copy; 2004 Foo Corporation
+    &lt;/div&gt;
+</code></pre>
+
+<p>会被转换为：</p>
+
+<pre><code>&lt;pre&gt;&lt;code&gt;&amp;lt;div class="footer"&amp;gt;
+    &amp;amp;copy; 2004 Foo Corporation
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+<p>代码区块中，一般的 Markdown 语法不会被转换，像是星号便只是星号，这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件。</p>
+
+<h3 id="hr">分隔线</h3>
+
+
+<p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+
+<pre><code>* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+</code></pre>
+
+<hr />
+
+<h2 id="span">区段元素</h2>
+
+
+
+
+<h3 id="link">链接</h3>
+
+
+<p>Markdown 支持两种形式的链接语法： <em>行内式</em>和<em>参考式</em>两种形式。</p>
+
+<p>不管是哪一种，链接文字都是用 [方括号] 来标记。</p>
+
+<p>要建立一个<em>行内式</em>的链接，只要在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
+
+<pre><code>This is [an example](http://example.com/ "Title") inline link.
+
+[This link](http://example.net/) has no title attribute.
+</code></pre>
+
+<p>会产生：</p>
+
+<pre><code>&lt;p&gt;This is &lt;a href="http://example.com/" title="Title"&gt;
+an example&lt;/a&gt; inline link.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://example.net/"&gt;This link&lt;/a&gt; has no
+title attribute.&lt;/p&gt;
+</code></pre>
+
+<p>如果你是要链接到同样主机的资源，你可以使用相对路径：</p>
+
+<pre><code>See my [About](/about/) page for details.   
+</code></pre>
+
+<p><em>参考式</em>的链接是在链接文字的括号后面再接上另一个方括号，而在第二个方括号里面要填入用以辨识链接的标记：</p>
+
+<pre><code>This is [an example][id] reference-style link.
+</code></pre>
+
+<p>你也可以选择性地在两个方括号中间加上一个空格：</p>
+
+<pre><code>This is [an example] [id] reference-style link.
+</code></pre>
+
+<p>接着，在文件的任意处，你可以把这个标记的链接内容定义出来：</p>
+
+<pre><code>[id]: http://example.com/  "Optional Title Here"
+</code></pre>
+
+<p>链接内容定义的形式为：</p>
+
+<ul>
+<li>方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</li>
+<li>接着一个冒号</li>
+<li>接着一个以上的空格或制表符</li>
+<li>接着链接的网址</li>
+<li>选择性地接着 title 内容，可以用单引号、双引号或是括弧包着</li>
+</ul>
+
+
+<p>下面这三种链接的定义都是相同：</p>
+
+<pre><code>[foo]: http://example.com/  "Optional Title Here"
+[foo]: http://example.com/  'Optional Title Here'
+[foo]: http://example.com/  (Optional Title Here)
+</code></pre>
+
+<p><strong>请注意：</strong>有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</p>
+
+<p>链接网址也可以用方括号包起来：</p>
+
+<pre><code>[id]: &lt;http://example.com/&gt;  "Optional Title Here"
+</code></pre>
+
+<p>你也可以把 title 属性放到下一行，也可以加一些缩进，若网址太长的话，这样会比较好看：</p>
+
+<pre><code>[id]: http://example.com/longish/path/to/resource/here
+    "Optional Title Here"
+</code></pre>
+
+<p>网址定义只有在产生链接的时候用到，并不会直接出现在文件之中。</p>
+
+<p>链接辨别标签可以有字母、数字、空白和标点符号，但是并<em>不</em>区分大小写，因此下面两个链接是一样的：</p>
+
+<pre><code>[link text][a]
+[link text][A]
+</code></pre>
+
+<p><em>隐式链接标记</em>功能让你可以省略指定链接标记，这种情形下，链接标记会视为等同于链接文字，要用隐式链接标记只要在链接文字后面加上一个空的方括号，如果你要让 &#8220;Google&#8221; 链接到 google.com，你可以简化成：</p>
+
+<pre><code>[Google][]
+</code></pre>
+
+<p>然后定义链接内容：</p>
+
+<pre><code>[Google]: http://google.com/
+</code></pre>
+
+<p>由于链接文字可能包含空白，所以这种简化型的标记内也许包含多个单词：</p>
+
+<pre><code>Visit [Daring Fireball][] for more information.
+</code></pre>
+
+<p>然后接着定义链接：</p>
+
+<pre><code>[Daring Fireball]: http://daringfireball.net/
+</code></pre>
+
+<p>链接的定义可以放在文件中的任何一个地方，我比较偏好直接放在链接出现段落的后面，你也可以把它放在文件最后面，就像是注解一样。</p>
+
+<p>下面是一个参考式链接的范例：</p>
+
+<pre><code>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        "Google"
+  [2]: http://search.yahoo.com/  "Yahoo Search"
+  [3]: http://search.msn.com/    "MSN Search"
+</code></pre>
+
+<p>如果改成用链接名称的方式写：</p>
+
+<pre><code>I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        "Google"
+  [yahoo]:  http://search.yahoo.com/  "Yahoo Search"
+  [msn]:    http://search.msn.com/    "MSN Search"
+</code></pre>
+
+<p>上面两种写法都会产生下面的 HTML。</p>
+
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href="http://google.com/"
+title="Google"&gt;Google&lt;/a&gt; than from
+&lt;a href="http://search.yahoo.com/" title="Yahoo Search"&gt;Yahoo&lt;/a&gt;
+or &lt;a href="http://search.msn.com/" title="MSN Search"&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+
+<p>下面是用行内式写的同样一段内容的 Markdown 文件，提供作为比较之用：</p>
+
+<pre><code>I get 10 times more traffic from [Google](http://google.com/ "Google")
+than from [Yahoo](http://search.yahoo.com/ "Yahoo Search") or
+[MSN](http://search.msn.com/ "MSN Search").
+</code></pre>
+
+<p>参考式的链接其实重点不在于它比较好写，而是它比较好读，比较一下上面的范例，使用参考式的文章本身只有 81 个字符，但是用行内形式的却会增加到 176 个字元，如果是用纯 HTML 格式来写，会有 234 个字元，在 HTML 格式中，标签比文本还要多。</p>
+
+<p>使用 Markdown 的参考式链接，可以让文件更像是浏览器最后产生的结果，让你可以把一些标记相关的元数据移到段落文字之外，你就可以增加链接而不让文章的阅读感觉被打断。</p>
+
+<h3 id="em">强调</h3>
+
+
+<p>Markdown 使用星号（<code>*</code>）和底线（<code>_</code>）作为标记强调字词的符号，被 <code>*</code> 或 <code>_</code> 包围的字词会被转成用 <code>&lt;em&gt;</code> 标签包围，用两个 <code>*</code> 或 <code>_</code> 包起来的话，则会被转成 <code>&lt;strong&gt;</code>，例如：</p>
+
+<pre><code>*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+</code></pre>
+
+<p>会转成：</p>
+
+<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
+
+&lt;em&gt;single underscores&lt;/em&gt;
+
+&lt;strong&gt;double asterisks&lt;/strong&gt;
+
+&lt;strong&gt;double underscores&lt;/strong&gt;
+</code></pre>
+
+<p>你可以随便用你喜欢的样式，唯一的限制是，你用什么符号开启标签，就要用什么符号结束。</p>
+
+<p>强调也可以直接插在文字中间：</p>
+
+<pre><code>un*frigging*believable
+</code></pre>
+
+<p>但是<strong>如果你的 <code>*</code> 和 <code>_</code> 两边都有空白的话，它们就只会被当成普通的符号</strong>。</p>
+
+<p>如果要在文字前后直接插入普通的星号或底线，你可以用反斜线：</p>
+
+<pre><code>\*this text is surrounded by literal asterisks\*
+</code></pre>
+
+<h3 id="code">代码</h3>
+
+
+<p>如果要标记一小段行内代码，你可以用反引号把它包起来（<code>`</code>），例如：</p>
+
+<pre><code>Use the `printf()` function.
+</code></pre>
+
+<p>会产生：</p>
+
+<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
+</code></pre>
+
+<p>如果要在代码区段内插入反引号，你可以用多个反引号来开启和结束代码区段：</p>
+
+<pre><code>``There is a literal backtick (`) here.``
+</code></pre>
+
+<p>这段语法会产生：</p>
+
+<pre><code>&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+
+<p>代码区段的起始和结束端都可以放入一个空白，起始端后面一个，结束端前面一个，这样你就可以在区段的一开始就插入反引号：</p>
+
+<pre><code>A single backtick in a code span: `` ` ``
+
+A backtick-delimited string in a code span: `` `foo` ``
+</code></pre>
+
+<p>会产生：</p>
+
+<pre><code>&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+
+<p>在代码区段内，<code>&amp;</code> 和方括号<strong>都</strong>会被自动地转成 HTML 实体，这使得插入 HTML 原始码变得很容易，Markdown 会把下面这段：</p>
+
+<pre><code>Please don't use any `&lt;blink&gt;` tags.
+</code></pre>
+
+<p>转为：</p>
+
+<pre><code>&lt;p&gt;Please don't use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+</code></pre>
+
+<p>你也可以这样写：</p>
+
+<pre><code>`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.
+</code></pre>
+
+<p>以产生：</p>
+
+<pre><code>&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded
+equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
+</code></pre>
+
+<h3 id="img">图片</h3>
+
+
+<p>很明显地，要在纯文字应用中设计一个「自然」的语法来插入图片是有一定难度的。</p>
+
+<p>Markdown 使用一种和链接很相似的语法来标记图片，同样也允许两种样式： <em>行内式</em>和<em>参考式</em>。</p>
+
+<p>行内式的图片语法看起来像是：</p>
+
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg "Optional title")
+</code></pre>
+
+<p>详细叙述如下：</p>
+
+<ul>
+<li>一个惊叹号 <code>!</code></li>
+<li>接着一个方括号，里面放上图片的替代文字</li>
+<li>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上
+选择性的 &#8216;title&#8217; 文字。</li>
+</ul>
+
+
+<p>参考式的图片语法则长得像这样：</p>
+
+<pre><code>![Alt text][id]
+</code></pre>
+
+<p>「id」是图片参考的名称，图片参考的定义方式则和连结参考一样：</p>
+
+<pre><code>[id]: url/to/image  "Optional title attribute"
+</code></pre>
+
+<p>到目前为止， Markdown 还没有办法指定图片的宽高，如果你需要的话，你可以使用普通的 <code>&lt;img&gt;</code> 标签。</p>
+
+<hr />
+
+<h2 id="misc">其它</h2>
+
+
+
+
+<h3 id="autolink">自动链接</h3>
+
+
+<p>Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用方括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
+
+<pre><code>&lt;http://example.com/&gt;
+</code></pre>
+
+<p>Markdown 会转为：</p>
+
+<pre><code>&lt;a href="http://example.com/"&gt;http://example.com/&lt;/a&gt;
+</code></pre>
+
+<p>邮址的自动链接也很类似，只是 Markdown 会先做一个编码转换的过程，把文字字符转成 16 进位码的 HTML 实体，这样的格式可以糊弄一些不好的邮址收集机器人，例如：</p>
+
+<pre><code>&lt;address@example.com&gt;
+</code></pre>
+
+<p>Markdown 会转成：</p>
+
+<pre><code>&lt;a href="&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
+&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
+&amp;#109;"&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
+&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+</code></pre>
+
+<p>在浏览器里面，这段字串（其实是 <code>&lt;a href="mailto:address@example.com"&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「address@example.com」链接。</p>
+
+<p>（这种作法虽然可以糊弄不少的机器人，但并不能全部挡下来，不过总比什么都不做好些。不管怎样，公开你的信箱终究会引来广告信件的。）</p>
+
+<h3 id="backslash">反斜杠</h3>
+
+
+<p>Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用 <code>&lt;em&gt;</code> 标签），你可以在星号的前面加上反斜杠：</p>
+
+<pre><code>\*literal asterisks\*
+</code></pre>
+
+<p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
+
+<pre><code>\   反斜线
+`   反引号
+*   星号
+_   底线
+{}  花括号
+[]  方括号
+()  括弧
+#   井字号
++   加号
+-   减号
+.   英文句点
+!   惊叹号
+</code></pre>
+
+<h2 id="acknowledgement">感谢</h2>
+
+
+<p>感谢 <a href="https://twitter.com/#!/leafy7382">leafy7382</a> 协助翻译，<a href="http://iamhlb.com/">hlb</a>、<a href="http://twitter.com/randylien">Randylien</a> 帮忙润稿，<a href="https://twitter.com/#!/ethantw">ethantw</a> 的<a href="http://ethantw.net/projects/han/">汉字标准格式・CSS Reset</a>， <a href="http://kidwm.net/">WM</a> 回报文字错误。</p>
+
+<p>感谢 <a href="https://github.com/fenprace">fenprace</a>，<a href="https://github.com/addv">addv</a>。</p>
+
+<hr />
+
+<h2 id="editor">Markdown 免费编辑器</h2>
+
+
+<p>Windows 平台</p>
+
+<ul>
+<li><a href="http://markdownpad.com/">MarkdownPad</a></li>
+<li><a href="http://code52.org/DownmarkerWPF/">MarkPad</a></li>
+</ul>
+
+
+<p>Linux 平台</p>
+
+<ul>
+<li><a href="http://sourceforge.net/p/retext/home/ReText/">ReText</a></li>
+</ul>
+
+
+<p>Mac 平台</p>
+
+<ul>
+<li><a href="http://mouapp.com/">Mou</a></li>
+</ul>
+
+
+<p>在线编辑器</p>
+
+<ul>
+<li><a href="http://markable.in/">Markable.in</a></li>
+<li><a href="http://dillinger.io/">Dillinger.io</a></li>
+</ul>
+
+
+<p>浏览器插件</p>
+
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/oknndfeeopgpibecfjljjfanledpbkog">MaDe</a> (Chrome)</li>
+</ul>
+
+
+<p>高级应用</p>
+
+<ul>
+<li><a href="http://www.sublimetext.com/2">Sublime Text 2</a> + <a href="http://ttscoff.github.com/MarkdownEditing/">MarkdownEditing</a> / <a href="http://lucifr.com/2012/07/12/markdownediting-for-sublime-text-2/">教程</a></li>
+</ul>
+
+
+<p>*** 如有更好的 Markdown 免费编辑器推荐，请到<a href="https://gitcafe.com/riku/Markdown-Syntax-CN/tickets/1">这里反馈</a>，谢谢！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2013, 你好]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/01/new-year/"/>
+    <updated>2013-01-01T00:00:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/01/new-year</id>
+    <content type="html"><![CDATA[<p>这是2013年第一天开始写的博客，这是要用一年来写的博客。</p>
+
+<p>这一年，我要做什么？我希望2014年能在这里吹嘘我有那些长进？我倒是想在这一刻拍脑袋列出个一二三四，犹如重要人物的重要讲话一般，但是重要讲话什么时候发挥过作用呢？</p>
+
+<!--more-->
+
+
+<p>回首2012，一句话：也就那样吧。去年最大的改变就是由学校步入社会了，去年二月份开始实习，不算中途学校的时间的话，也快一年了。
+作为一个码农，接触的人并不比学校复杂多少，说自己步入社会还真有点脸红。</p>
+]]></content>
+  </entry>
+  
+</feed>
