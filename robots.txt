@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /admin/
-
-Sitemap: http://zgx.github.com/sitemap.xml 

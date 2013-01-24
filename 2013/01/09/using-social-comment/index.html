@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在Otcopress使用社会化评论 - 横竖弯钩</title>
+ 
+  <meta name="description" content="在Otcopress使用社会化评论 Jan 9th, 2013 在octopress中使用disqus很简单，只要修改在配置文件“_config.yalm”： # Disqus Comments
+disqus_short_name: your_short_name # &hellip;">
+  
+  <meta name="author" content="横竖弯钩">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zgx.github.com/blog/2013/01/09/using-social-comment/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="横竖弯钩" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37494920-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">横竖弯钩</a></h1>
+  
+    <h2>梦想，需要坚持</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zgx.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">博客</a></li>
+  <li><a href="/blog/archives">目录</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在Otcopress使用社会化评论</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-09T00:15:00+08:00" pubdate data-updated="true">Jan 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><em>在octopress中使用disqus很简单</em>，只要修改在配置文件“_config.yalm”：</p>
+
+<pre><code># Disqus Comments
+disqus_short_name: your_short_name  #在这里输入你在disqus注册时申请的short name
+disqus_show_comment_count: false
+</code></pre>
+
+<!--more-->
+
+
+<p>octopress的默认模板就会检测到<code>disqus_short_name</code>配置的存在，就会把Disqus评论插件显示出来了。
+在文件<code>source/_layouts/post.html</code>,下面的代码就是负责把Disqus显示出来的。</p>
+
+<p><img src="http://bcs.duapp.com/picfile/2013/1/de86c60b1e7b51f1.png" alt="disqus" />
+这是默认配置下的Disqus的界面，可以出是英语的，目前语言也没有中文可配置。不过对我们博客的访客来说很大问题。
+关键的问题是它支持社交平台都是墙外之物，或许以后Disqus跟它们混了，点了这伙就跑出来了：
+<img src="http://bcs.duapp.com/picfile/2013/1/575181cb7965ec37.png" alt="404" /></p>
+
+<p>目光转向国内。而目前业界提供这类方案的网站有友言(jiathis旗下产品)、评论啦、多说、Denglu评论(灯鹭旗下产品)。
+最早听说的是“多说”，先<em>使用多说</em>。先上图：
+<img src="http://bcs.duapp.com/picfile/2013/1/ff0d42b3f55937b0.png" alt="多说" /></p>
+
+<p>国内土产就是不一样，中国特色主流社交帐号都可以登录，可以无障碍的在社交平台分享对博客来说还是很有意义的。
+Octopress当然没有对多说内置支持，不过在模板添加进去还是很容易的。在刚才的Disqus插件代码上面，添加如下代码。</p>
+
+<pre><code>&lt;!-- Duoshuo Comment BEGIN --&gt;
+    &lt;div class="ds-thread"&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;
+    var duoshuoQuery = {short_name:"your_short_name"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    &lt;/script&gt;
+&lt;!-- Duoshuo Comment END --&gt;
+</code></pre>
+
+<p>多说也是使用了short_name这个字段，short_name需要你到<a href="http://duoshuo.com/">多说</a>申请。我们可以参考Octopress的方法使用配置和插件的方式来使用多说，不过过度设计不是我的风格。
+这样就赶上潮流，使用了一把设计化评论。</p>
+</div>
+
+
+  
+  <p>
+	作者：<a href="http://zgx.github.com" title="横竖弯钩">横竖弯钩 </a><br />
+	原文地址：<a href="http://zgx.github.com/blog/2013/01/09/using-social-comment/" title="在Otcopress使用社会化评论">http://zgx.github.com/blog/2013/01/09/using-social-comment/</a>
+  </p>
+  
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">横竖弯钩</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-09T00:15:00+08:00" pubdate data-updated="true">Jan 9<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/08/vim-clipboard/" title="Previous Post: vim技巧之复制粘贴">&laquo; vim技巧之复制粘贴</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/10/bloging-on-github/" title="Next Post: 把博客放在Github">把博客放在Github &raquo;</a>
+      
+    </p>
+  </footer>
+
+<!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread"></div>
+	<script type="text/javascript">
+		var duoshuoQuery = {short_name:"hswg"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
+
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/21/upload-files-with-ajax/">用Ajax方式上传文件</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/11/set-keywords-in-orcopress/">Octopress技巧之设置关键字和描述</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/10/lovely-snowman/">可爱的雪人</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/10/bloging-on-github/">把博客放在Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/09/using-social-comment/">在Otcopress使用社会化评论</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - 横竖弯钩 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

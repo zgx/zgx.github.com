@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: octopress | 横竖弯钩]]></title>
+  <link href="http://zgx.github.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://zgx.github.com/"/>
+  <updated>2013-01-24T16:30:35+08:00</updated>
+  <id>http://zgx.github.com/</id>
+  <author>
+    <name><![CDATA[横竖弯钩]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在Cygwin搭建Octopress]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/"/>
+    <updated>2013-01-07T15:03:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin</id>
+    <content type="html"><![CDATA[<p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
+当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
+
+<!--more-->
+
+
+<ol>
+<li>直接用Cygwin setup.exe安装Ruby，目前的版本就是文档要求的1.9.3，OK。</li>
+<li>安装bundler
+
+<pre><code> gem install bundler
+</code></pre></li>
+<li>进入octopress目录，执行bundle install
+
+<pre><code> cd octopress
+ bundle install
+</code></pre>
+
+问题出现了，关键提示如下：
+
+<pre><code> posix-spawn.c:9:19: 致命错误：spawn.h：No such file or directory
+</code></pre></li>
+<li>上面的问题是由于posix-spawn的bug引起的，需要自己编译安装：
+
+<pre><code> gem install rake-compiler -v 0.7.6
+ git clone git://github.com/rtomayko/posix-spawn.git
+ cd posix-spawn
+ rake gem
+ gem install pkg/posix-spawn-0.3.6
+</code></pre></li>
+<li>再执行<code>bundle install</code>就没用问题了。</li>
+<li>享受octopress吧.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>
