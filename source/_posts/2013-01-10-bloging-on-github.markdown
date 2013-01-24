@@ -67,8 +67,11 @@ Github可以解析符合Jekyll规范的网站源码。
 
 ###再补充一点
 按照Github的[文档](https://help.github.com/articles/user-organization-and-project-pages)，
-建立一个与用户名相同的仓库，把页面传到master分支，就可以用`http://username.github.com/`访问，
-不过我试了下，没有成功(404)，有谁能指导下吗？
+~~~建立一个与用户名相同的仓库，把页面传到master分支，就可以用http://username.github.com/访问，
+不过我试了下，没有成功(404)，有谁能指导下吗？~~~我理解错了，是建立一个名为`username.github.com`的仓库
+(把username替换成你的用户名)，把页面放在master分支，就可以用`http://username.github.com`访问。
+已试验成功。
+
 
 好嘞，博客搭建完成。请在[这里][myblog]看下效果：[http://hswg.info][myblog]
 
