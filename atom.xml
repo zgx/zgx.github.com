@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://zgx.github.com/atom.xml" rel="self"/>
   <link href="http://zgx.github.com/"/>
-  <updated>2013-01-24T17:16:22+08:00</updated>
+  <updated>2013-01-30T20:20:19+08:00</updated>
   <id>http://zgx.github.com/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[正则表达式的贪婪与非贪婪模式]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/"/>
+    <updated>2013-01-30T20:06:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode</id>
+    <content type="html"><![CDATA[<p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
+原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
+尽可能多的匹配。</p>
+
+<p>如正则表达式</p>
+
+<pre><code>a.*b
+</code></pre>
+
+<p>匹配</p>
+
+<pre><code>a3obs5bg
+</code></pre>
+
+<p>得到的结果是：</p>
+
+<pre><code>a3obs5b
+</code></pre>
+
+<p>如果实际想要找的是：<code>a3ob</code> 该怎么办呢？把匹配模式改为非贪婪
+的就可以了。</p>
+
+<pre><code>a.*?b
+</code></pre>
+
+<p>将会匹配到：</p>
+
+<pre><code>a3ob
+</code></pre>
+
+<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python抓取网页]]></title>
+    <link href="http://zgx.github.com/blog/2013/01/29/use-python-fetch-webpage/"/>
+    <updated>2013-01-29T19:21:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/01/29/use-python-fetch-webpage</id>
+    <content type="html"><![CDATA[<h2>真的很简单</h2>
+
+<p>最基本的抓取网页，真的很简单，一行代码就可以了</p>
+
+<pre><code>import urllib2
+html = urllib2.urlopen('http://thesite.com').read()
+</code></pre>
+
+<p>没有异常发生的话，html就是抓取页面的源文件。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用Ajax方式上传文件]]></title>
@@ -484,6 +540,12 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
             fobj = self.request.files['picfile'][0]
             #fobj是一个字典，键值有：filename, body, content_type
             #根据情况处理fobj就是了
+</code></pre>
+
+<p>抓取网页</p>
+
+<pre><code>import urllib2
+html = urllib2.openurl('http://website.xx').read()
 </code></pre>
 ]]></content>
   </entry>

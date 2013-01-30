@@ -83,6 +83,116 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/">正则表达式的贪婪与非贪婪模式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T20:06:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
+原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
+尽可能多的匹配。</p>
+
+<p>如正则表达式</p>
+
+<pre><code>a.*b
+</code></pre>
+
+<p>匹配</p>
+
+<pre><code>a3obs5bg
+</code></pre>
+
+<p>得到的结果是：</p>
+
+<pre><code>a3obs5b
+</code></pre>
+
+<p>如果实际想要找的是：<code>a3ob</code> 该怎么办呢？把匹配模式改为非贪婪
+的就可以了。</p>
+
+<pre><code>a.*?b
+</code></pre>
+
+<p>将会匹配到：</p>
+
+<pre><code>a3ob
+</code></pre>
+
+<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/29/use-python-fetch-webpage/">Python抓取网页</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-29T19:21:00+08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>真的很简单</h2>
+
+<p>最基本的抓取网页，真的很简单，一行代码就可以了</p>
+
+<pre><code>import urllib2
+html = urllib2.urlopen('http://thesite.com').read()
+</code></pre>
+
+<p>没有异常发生的话，html就是抓取页面的源文件。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/01/21/upload-files-with-ajax/">用Ajax方式上传文件</a></h1>
     
     
@@ -430,86 +540,6 @@ disqus_show_comment_count: false
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/07/linux-notes/">Linux笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-07T11:27:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>设置系统代理</p>
-
-<pre><code>export http_proxy=http://user:password@host:port
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/06/python-notes/">Python笔记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-06T20:22:00+08:00" pubdate data-updated="true">Jan 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一些个人关于python的笔记</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/06/python-notes/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -525,6 +555,14 @@ disqus_show_comment_count: false
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/">正则表达式的贪婪与非贪婪模式</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/29/use-python-fetch-webpage/">Python抓取网页</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/21/upload-files-with-ajax/">用Ajax方式上传文件</a>
       </li>
     
@@ -534,14 +572,6 @@ disqus_show_comment_count: false
     
       <li class="post">
         <a href="/blog/2013/01/10/lovely-snowman/">可爱的雪人</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/10/bloging-on-github/">把博客放在Github</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/09/using-social-comment/">在Otcopress使用社会化评论</a>
       </li>
     
   </ul>

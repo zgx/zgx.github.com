@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Octopress技巧之设置关键字和描述 - 横竖弯钩</title>
+  <title>正则表达式的贪婪与非贪婪模式 - 横竖弯钩</title>
  
-  <meta name="description" content=" 这一篇文章介绍了如何在Octopress框架下设置关键字和描述, 特别提到了首页设置关键字和描述的方法。 ">
-  
-  <meta name="keywords" content="Octopress, 设置， 关键字， 描述">
+  <meta name="description" content="正则表达式的贪婪与非贪婪模式 Jan 30th, 2013 用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
+原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
+尽可能多的匹配。 如正则表达式 a.*b 匹配 a3obs5bg 得到的结果是： a3obs5b &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress/">
+  <link rel="canonical" href="http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Octopress技巧之设置关键字和描述</h1>
+      <h1 class="entry-title">正则表达式的贪婪与非贪婪模式</h1>
     
     
       <p class="meta">
@@ -96,98 +96,51 @@
   
 
 
-<time datetime="2013-01-11T21:39:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-30T20:06:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>关键字和描述</h3>
+<div class="entry-content"><p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
+原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
+尽可能多的匹配。</p>
 
-<p>这里所说的关键字和描述是指网页<code>head</code>部分的元标签<code>meta</code>，是给搜索引擎看的，以此希望用户可以比较容易找到本站。
-在html上就是面所示的标签：</p>
+<p>如正则表达式</p>
 
-<!--more-->
-
-
-<pre><code>&lt;meta name="description" content="横竖弯钩是一个关注IT技术的博客"&gt;
-&lt;meta name="keywords" content="IT, 编程, 码农的自嘲"&gt;
+<pre><code>a.*b
 </code></pre>
 
-<h3>Octopress设置关键字和描述的方法</h3>
+<p>匹配</p>
 
-<p>那么在Octopress的模板是怎么在页面设置这两个字段的呢？我们先看代码。打开文件: <code>source/_include/head.html</code>。
-找到设置“description”和“keywords”的地方：</p>
-
-<pre><code>{% capture description %}
-  {% if page.description %}
-    {{ page.description }}
-  {% else %}
-    {{ content | raw_content }}
-  {% endif %}
-{% endcapture %}
-&lt;meta name="description" 
-    content="{{ description | strip_html | condense_spaces | truncate:150 }}"&gt;
-
-{% if page.keywords %}&lt;meta name="keywords" content="{{ page.keywords }}"&gt;{% endif %}
+<pre><code>a3obs5bg
 </code></pre>
 
-<p>可以看出，“description”是取的是页面上的<code>description</code>字段, 就是在文件顶部被<code>---</code>包围起来的内容，关键字同样如此。
-也就是说我们可以在每篇博客设置不同的关键和描述。</p>
+<p>得到的结果是：</p>
 
-<pre><code>---
-layout: post
-title: "文章的标题"
-date: 2013-01-11 22:00
-description: "在这里写上描述"
-keywords: 关键字1，关键字2
-comments: true
-categories: 
----
-###你的博客
-你的博客正文
+<pre><code>a3obs5b
 </code></pre>
 
-<p>如上面的格式填上描述和关键字，Octopress帮你生成这一篇博客的页面就会包含你设置的关键字和描述了。如果你没有手动设置的话
-，模板会帮你截取正文的一部分作为描述，至于关键字这个标签就没有了。</p>
+<p>如果实际想要找的是：<code>a3ob</code> 该怎么办呢？把匹配模式改为非贪婪
+的就可以了。</p>
 
-<h3>首页如何设置</h3>
-
-<p>从模板代码我发现了，它没有对首页做特殊处理。通常我们需要在首页写上作为全站的描述和关键字，而模板默认的行为是在第一篇博客截取
-一部分作为描述。这显然不是我们要的结果。</p>
-
-<p>那怎么办呢？在这个问题我走了一些冤枉路。大致过程就是在配置文件<code>_config.yml</code>增加这两个字段，然后修改模板，判断如果是首页就
-取全局配置的关键字和描述。</p>
-
-<p>虽然改起来很简单，但是后来我发现了更简单的方法，在这里分享下。其实首页也是一个页面，也会有上面提到的普通文章页面的配置信息。
-<em>只要修改index.html</em>就可以了。
-打开source/index.html，如下设置：</p>
-
-<pre><code>---
-layout: default
-description: "只是一个你们搜索引擎都没收录的网站，你说我是瞎折腾么"
-keywords: 技术，码农，单身, 单身，真的是单身
----
+<pre><code>a.*?b
 </code></pre>
 
-<p>OK，就怎么简单。不过不要学上面的堆砌关键字，话说谷歌百度之流不喜欢。</p>
+<p>将会匹配到：</p>
 
-<h3>举一反三</h3>
+<pre><code>a3ob
+</code></pre>
 
-<ol>
-<li>对于网站其他页面，都可以用这个方法设置关键字和描述</li>
-<li>页面上的配置信息，我们可以添加自己的字段进去，在模板用<code>page.[字段名]</code>就可以访问了。这样你就可以给每篇加上额外的信息了。
-如<code>hide</code>:不显示；<code>forward</code>:转发。然后就可以在模板加上个性功能了。</li>
-</ol>
-
+<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。</p>
 </div>
 
 
   
   <p>
 	作者：<a href="http://zgx.github.com" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress/" title="Octopress技巧之设置关键字和描述">http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress/</a>
+	原文地址：<a href="http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/" title="正则表达式的贪婪与非贪婪模式">http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/</a>
   </p>
   
   <footer>
@@ -209,7 +162,7 @@ keywords: 技术，码农，单身, 单身，真的是单身
   
 
 
-<time datetime="2013-01-11T21:39:00+08:00" pubdate data-updated="true">Jan 11<span>th</span>, 2013</time>
+<time datetime="2013-01-30T20:06:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
       
 
 
@@ -224,10 +177,8 @@ keywords: 技术，码农，单身, 单身，真的是单身
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/10/lovely-snowman/" title="Previous Post: 可爱的雪人">&laquo; 可爱的雪人</a>
+        <a class="basic-alignment left" href="/blog/2013/01/29/use-python-fetch-webpage/" title="Previous Post: Python抓取网页">&laquo; Python抓取网页</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/21/upload-files-with-ajax/" title="Next Post: 用Ajax方式上传文件">用Ajax方式上传文件 &raquo;</a>
       
     </p>
   </footer>
