@@ -17,3 +17,7 @@ tornado处理上传的文件
 				fobj = self.request.files['picfile'][0]
 				#fobj是一个字典，键值有：filename, body, content_type
 				#根据情况处理fobj就是了
+
+抓取网页
+	import urllib2
+	html = urllib2.openurl('http://website.xx').read()
