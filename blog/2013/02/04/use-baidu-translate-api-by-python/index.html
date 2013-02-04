@@ -5,10 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>在Cygwin搭建Octopress - 横竖弯钩</title>
+  <title>Python使用百度翻译API - 横竖弯钩</title>
  
-  <meta name="description" content="在Cygwin搭建Octopress Jan 7th, 2013 用了半天时间在Ubuntu搭建了octopress，跟着octopress的文档一步一步来就可以了。
-当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤： 直接用Cygwin setup. &hellip;">
+  <meta name="description" content="Python使用百度翻译API Feb 4th, 2013 谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。 使用前提 你要有百度的api_key。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
+的API KEY就可以用了。 &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/">
+  <link rel="canonical" href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">在Cygwin搭建Octopress</h1>
+      <h1 class="entry-title">Python使用百度翻译API</h1>
     
     
       <p class="meta">
@@ -95,54 +95,97 @@
   
 
 
-<time datetime="2013-01-07T15:03:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2013</time>
+<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
-当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
+<div class="entry-content"><p>谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。</p>
 
 <!--more-->
 
 
-<ol>
-<li>直接用Cygwin setup.exe安装Ruby，目前的版本就是文档要求的1.9.3，OK。</li>
-<li>安装bundler
+<h3>使用前提</h3>
 
-<pre><code> gem install bundler
-</code></pre></li>
-<li>进入octopress目录，执行bundle install
+<p>你要有百度的<code>api_key</code>。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
+的API KEY就可以用了。
+如何没用，你可以你可以在<a href="http://developer.baidu.com/wiki/index.php?title=%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E9%A6%96%E9%A1%B5/%E7%BD%91%E7%AB%99%E6%8E%A5%E5%85%A5/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97">这里</a>
+了解如何获得app key。顺便还可以玩一下BAE。</p>
 
-<pre><code> cd octopress
- bundle install
+<h3>百度翻译API</h3>
+
+<p><strong>URL</strong></p>
+
+<pre><code>http://openapi.baidu.com/public/2.0/bmt/translate
 </code></pre>
 
-问题出现了，关键提示如下：
+<p><strong>请求参数</strong></p>
 
-<pre><code> posix-spawn.c:9:19: 致命错误：spawn.h：No such file or directory
-</code></pre></li>
-<li>上面的问题是由于posix-spawn的bug引起的，需要自己编译安装：
+<ul>
+<li>from. 源语言语种：语言代码或auto</li>
+<li>to. 目标语言语种：语言代码或auto</li>
+<li>client_id. 上面说的api_key</li>
+<li>q. 待翻译内容</li>
+</ul>
 
-<pre><code> gem install rake-compiler -v 0.7.6
- git clone git://github.com/rtomayko/posix-spawn.git
- cd posix-spawn
- rake gem
- gem install pkg/posix-spawn-0.3.6
-</code></pre></li>
-<li>再执行<code>bundle install</code>就没用问题了。</li>
-<li>享受octopress吧.</li>
-</ol>
 
+<p><strong>返回内容</strong>
+JSON字符串。示例如下：</p>
+
+<pre><code>{"from":"en",
+ "to":"zh",
+ "trans_result":[{"src":"today","dst":"\u4eca\u5929"}]}
+</code></pre>
+
+<p>trans_result就是我们需要的翻译结果了。注意trans_result是数组，可能会没有或者有多个结果返回吧，
+不过目前我还没碰到过。</p>
+
+<h3>Python调用示例</h3>
+
+<p>在Python使用这个API很简单，简单的就是范围URL，获取结果就是了。下面的代码比较偷懒，权当参考。</p>
+
+<pre><code># -*- coding: utf-8 -*-
+import urllib2
+import urllib
+import json
+
+DU_TRANS_URL = 'http://openapi.baidu.com/public/2.0/bmt/translate?from=%s&amp;to=%s&amp;q=%s&amp;client_id=%s'
+DU_CLIENT_ID = 'yourkeyyourkeyyourkeyyourkey'
+
+def trans(slang, tlang, trans_str):
+    du_url = DU_TRANS_URL % (slang, tlang, urllib.quote(trans_str), DU_CLIENT_ID)
+    try:
+        rsp = urllib2.urlopen(du_url)
+    except Exception, e:
+        raise Exception('Connecting to server fail:' + str(e)) 
+    rs = json.load(rsp)
+    if 'error_code' in rs:
+        raise Exception('trans error:' + rs['error_msg'])
+    if rs['trans_result']:
+        return rs['trans_result'][0]['dst']
+    else:
+        raise Exception('No result')
+
+def c2e(src):
+    return trans('zh', 'en', src)
+
+def e2c(src):
+    return trans('en', 'zh', src)
+
+if __name__ == '__main__':
+    print c2e('这是中文')
+</code></pre>
+
+<p>我们的工具箱又多了一个翻译功能了。哈哈哈。</p>
 </div>
 
 
   
   <p>
 	作者：<a href="http://zgx.github.com" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/" title="在Cygwin搭建Octopress">http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/</a>
+	原文地址：<a href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/" title="Python使用百度翻译API">http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/</a>
   </p>
   
   <footer>
@@ -164,14 +207,8 @@
   
 
 
-<time datetime="2013-01-07T15:03:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2013</time>
+<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
 
 
     </p>
@@ -185,10 +222,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/07/linux-notes/" title="Previous Post: linux笔记">&laquo; linux笔记</a>
+        <a class="basic-alignment left" href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/" title="Previous Post: 正则表达式的贪婪与非贪婪模式">&laquo; 正则表达式的贪婪与非贪婪模式</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/08/bae-pic/" title="Next Post: 用BAE和百度云存储做了个简陋的图片上传应用">用BAE和百度云存储做了个简陋的图片上传应用 &raquo;</a>
       
     </p>
   </footer>

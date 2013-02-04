@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://zgx.github.com/atom.xml" rel="self"/>
   <link href="http://zgx.github.com/"/>
-  <updated>2013-01-31T22:49:17+08:00</updated>
+  <updated>2013-02-04T19:09:22+08:00</updated>
   <id>http://zgx.github.com/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -14,6 +14,91 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Python使用百度翻译API]]></title>
+    <link href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/"/>
+    <updated>2013-02-04T18:30:00+08:00</updated>
+    <id>http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python</id>
+    <content type="html"><![CDATA[<p>谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。</p>
+
+<!--more-->
+
+
+<h3>使用前提</h3>
+
+<p>你要有百度的<code>api_key</code>。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
+的API KEY就可以用了。
+如何没用，你可以你可以在<a href="http://developer.baidu.com/wiki/index.php?title=%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E9%A6%96%E9%A1%B5/%E7%BD%91%E7%AB%99%E6%8E%A5%E5%85%A5/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97">这里</a>
+了解如何获得app key。顺便还可以玩一下BAE。</p>
+
+<h3>百度翻译API</h3>
+
+<p><strong>URL</strong></p>
+
+<pre><code>http://openapi.baidu.com/public/2.0/bmt/translate
+</code></pre>
+
+<p><strong>请求参数</strong></p>
+
+<ul>
+<li>from. 源语言语种：语言代码或auto</li>
+<li>to. 目标语言语种：语言代码或auto</li>
+<li>client_id. 上面说的api_key</li>
+<li>q. 待翻译内容</li>
+</ul>
+
+
+<p><strong>返回内容</strong>
+JSON字符串。示例如下：</p>
+
+<pre><code>{"from":"en",
+ "to":"zh",
+ "trans_result":[{"src":"today","dst":"\u4eca\u5929"}]}
+</code></pre>
+
+<p>trans_result就是我们需要的翻译结果了。注意trans_result是数组，可能会没有或者有多个结果返回吧，
+不过目前我还没碰到过。</p>
+
+<h3>Python调用示例</h3>
+
+<p>在Python使用这个API很简单，简单的就是范围URL，获取结果就是了。下面的代码比较偷懒，权当参考。</p>
+
+<pre><code># -*- coding: utf-8 -*-
+import urllib2
+import urllib
+import json
+
+DU_TRANS_URL = 'http://openapi.baidu.com/public/2.0/bmt/translate?from=%s&amp;to=%s&amp;q=%s&amp;client_id=%s'
+DU_CLIENT_ID = 'yourkeyyourkeyyourkeyyourkey'
+
+def trans(slang, tlang, trans_str):
+    du_url = DU_TRANS_URL % (slang, tlang, urllib.quote(trans_str), DU_CLIENT_ID)
+    try:
+        rsp = urllib2.urlopen(du_url)
+    except Exception, e:
+        raise Exception('Connecting to server fail:' + str(e)) 
+    rs = json.load(rsp)
+    if 'error_code' in rs:
+        raise Exception('trans error:' + rs['error_msg'])
+    if rs['trans_result']:
+        return rs['trans_result'][0]['dst']
+    else:
+        raise Exception('No result')
+
+def c2e(src):
+    return trans('zh', 'en', src)
+
+def e2c(src):
+    return trans('en', 'zh', src)
+
+if __name__ == '__main__':
+    print c2e('这是中文')
+</code></pre>
+
+<p>我们的工具箱又多了一个翻译功能了。哈哈哈。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[正则表达式的贪婪与非贪婪模式]]></title>
     <link href="http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/"/>
     <updated>2013-01-30T20:06:00+08:00</updated>
@@ -21,6 +106,9 @@
     <content type="html"><![CDATA[<p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
 原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
 尽可能多的匹配。</p>
+
+<!--more-->
+
 
 <p>如正则表达式</p>
 
