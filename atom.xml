@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://zgx.github.com/atom.xml" rel="self"/>
   <link href="http://zgx.github.com/"/>
-  <updated>2013-02-04T19:09:22+08:00</updated>
+  <updated>2013-02-04T19:15:09+08:00</updated>
   <id>http://zgx.github.com/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -136,7 +136,9 @@ if __name__ == '__main__':
 <pre><code>a3ob
 </code></pre>
 
-<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。</p>
+<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。
+<code>*? +? ?? {m,n}? 的作用是把* + ? {m,n}变成非贪婪模式。
+</code></p>
 ]]></content>
   </entry>
   
