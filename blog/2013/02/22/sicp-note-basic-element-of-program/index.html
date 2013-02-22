@@ -5,10 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Python使用百度翻译API - 横竖弯钩</title>
+  <title>程序设计的基本元素——SICP阅读笔记 - 横竖弯钩</title>
  
-  <meta name="description" content="Python使用百度翻译API Feb 4th, 2013 谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。 使用前提 你要有百度的api_key。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
-的API KEY就可以用了。 &hellip;">
+  <meta name="description" content="程序设计的基本元素——SICP阅读笔记 Feb 22nd, 2013 一种好的编程语言，不仅仅是一种指挥计算机执行任务的方式，它还应该成
+为一种框架，是我们能够在其中组织自己有关计算过程的思想。这样，当我
+们描述一个语言时，就需要将注意力放在这一语言所提供的，能够将简单认 &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/">
+  <link rel="canonical" href="http://zgx.github.com/blog/2013/02/22/sicp-note-basic-element-of-program/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Python使用百度翻译API</h1>
+      <h1 class="entry-title">程序设计的基本元素——SICP阅读笔记</h1>
     
     
       <p class="meta">
@@ -95,97 +96,104 @@
   
 
 
-<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+<time datetime="2013-02-22T20:05:00+08:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。</p>
+<div class="entry-content"><p>一种好的编程语言，不仅仅是一种指挥计算机执行任务的方式，它还应该成
+为一种框架，是我们能够在其中组织自己有关计算过程的思想。这样，当我
+们描述一个语言时，就需要将注意力放在这一语言所提供的，能够将简单认
+识组合起来形成更复杂认识的方法方面，每一种强有力的语言都为此提供了
+三种机制：</p>
 
 <!--more-->
 
 
-<h3>使用前提</h3>
-
-<p>你要有百度的<code>api_key</code>。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
-的API KEY就可以用了。
-如何没用，你可以你可以在<a href="http://developer.baidu.com/wiki/index.php?title=%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E9%A6%96%E9%A1%B5/%E7%BD%91%E7%AB%99%E6%8E%A5%E5%85%A5/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97">这里</a>
-了解如何获得app key。顺便还可以玩一下BAE。</p>
-
-<h3>百度翻译API</h3>
-
-<p><strong>URL</strong></p>
-
-<pre><code>http://openapi.baidu.com/public/2.0/bmt/translate
-</code></pre>
-
-<p><strong>请求参数</strong></p>
-
 <ul>
-<li>from. 源语言语种：语言代码或auto</li>
-<li>to. 目标语言语种：语言代码或auto</li>
-<li>client_id. 上面说的api_key</li>
-<li>q. 待翻译内容</li>
+<li><em>基本表达形式</em>，用于表示语言所关心的最简单个体。</li>
+<li><em>组合的方法</em>，通过它们可以从简单的东西出发构造出复合的元素。</li>
+<li><em>抽象的方法</em>，通过他们可以为复合对象命名，并将当作单元去操作。</li>
 </ul>
 
 
-<p><strong>返回内容</strong>
-JSON字符串。示例如下：</p>
+<p>在程序设计中，我们需要处理两类要素：过程和数据（它们实际上并不是这
+样严格分离的）。非形式地说，数据是一种我们希望去操作的“东西”，而
+过程就是有关操作这些数据的规则的描述。这样，任何强有力的程序设计语
+言都必须能表述基本的数据个基本的过程，还需要提供对过程和数据进行组
+合和抽象的方法。</p>
 
-<pre><code>{"from":"en",
- "to":"zh",
- "trans_result":[{"src":"today","dst":"\u4eca\u5929"}]}
+<h2>Lisp表达式</h2>
+
+<p>我们使用的Lisp方言是Scheme，解析器使用Guile。用键盘输入一个表达式，
+解析器的相应就是将它对这一表达式的求值结果显示出来。</p>
+
+<p>一种基本表达式就是数。如给解析器输入一个数（下面的&#8221;>&#8221;号是解析器输入，
+不是我们输入的一部分）</p>
+
+<pre><code>&gt;486
 </code></pre>
 
-<p>trans_result就是我们需要的翻译结果了。注意trans_result是数组，可能会没有或者有多个结果返回吧，
-不过目前我还没碰到过。</p>
+<p>解析器的响应是打印出</p>
 
-<h3>Python调用示例</h3>
-
-<p>在Python使用这个API很简单，简单的就是范围URL，获取结果就是了。下面的代码比较偷懒，权当参考。</p>
-
-<pre><code># -*- coding: utf-8 -*-
-import urllib2
-import urllib
-import json
-
-DU_TRANS_URL = 'http://openapi.baidu.com/public/2.0/bmt/translate?from=%s&amp;to=%s&amp;q=%s&amp;client_id=%s'
-DU_CLIENT_ID = 'yourkeyyourkeyyourkeyyourkey'
-
-def trans(slang, tlang, trans_str):
-    du_url = DU_TRANS_URL % (slang, tlang, urllib.quote(trans_str), DU_CLIENT_ID)
-    try:
-        rsp = urllib2.urlopen(du_url)
-    except Exception, e:
-        raise Exception('Connecting to server fail:' + str(e)) 
-    rs = json.load(rsp)
-    if 'error_code' in rs:
-        raise Exception('trans error:' + rs['error_msg'])
-    if rs['trans_result']:
-        return rs['trans_result'][0]['dst']
-    else:
-        raise Exception('No result')
-
-def c2e(src):
-    return trans('zh', 'en', src)
-
-def e2c(src):
-    return trans('en', 'zh', src)
-
-if __name__ == '__main__':
-    print c2e('这是中文')
+<pre><code>486
 </code></pre>
 
-<p>我们的工具箱又多了一个翻译功能了。哈哈哈。</p>
+<p>可以用基本过程的表达式（例如+或者*），将表示数的表达式组合起来，
+形成复合表达式，以表示要把有关过程应用于这些数，例如：</p>
+
+<pre><code>&gt;(+ 137 349)
+486
+
+&gt;(/ 10 5)
+2
+
+&gt;(* 2 6 12)
+144
+</code></pre>
+
+<p>像上面这样的表达式称为组合式，其构成方式是用一对括号括起来一些表达式，
+形成一个<em>表</em>，用于表示一个过程应用。在表最左边的元素成为运算符，其他
+元素都称为运算对象。求值的过程就是将由运算符所刻画的过程应用于有关
+的实际参数（运算对象的值）。</p>
+
+<p>组合式的元素本身也可以是组合式：</p>
+
+<pre><code>&gt;(- (* 3 5) (+ 5 6))
+4
+</code></pre>
+
+<p>不但运算对象可以是组合式，运算符也可以是组合式，这个后续再讲。</p>
+
+<h2>命名</h2>
+
+<p>通过名字去使用计算对象，这是编程语言必不可少的方面。我们将名字标识符
+称为变量，它的值就是他所对应的那个对象。</p>
+
+<p>在Scheme里，给事物命名通过<code>define</code>的方式完成：</p>
+
+<pre><code>&gt;(define size 2)
+</code></pre>
+
+<p>会导致解析器将值2与名字相关联。此后，我们就可以通过这个名字出引用值2了：</p>
+
+<pre><code>&gt;size
+2
+</code></pre>
+
+<p>应该看到，我们可以将值与符号关联，而后又能提取出这些值，这意味着解析器
+必须维持某种存储能力，以便保持有关的名字-值对偶的轨迹，这种存储成为
+环境。环境为求值过程的进行提供了种上下文，对于我们理解程序的执行起
+着极其重要的作用。</p>
 </div>
 
 
   
   <p>
 	作者：<a href="http://zgx.github.com" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/" title="Python使用百度翻译API">http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/</a>
+	原文地址：<a href="http://zgx.github.com/blog/2013/02/22/sicp-note-basic-element-of-program/" title="程序设计的基本元素——SICP阅读笔记">http://zgx.github.com/blog/2013/02/22/sicp-note-basic-element-of-program/</a>
   </p>
   
   <footer>
@@ -207,7 +215,7 @@ if __name__ == '__main__':
   
 
 
-<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+<time datetime="2013-02-22T20:05:00+08:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2013</time>
       
 
 
@@ -222,10 +230,8 @@ if __name__ == '__main__':
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/" title="Previous Post: 正则表达式的贪婪与非贪婪模式">&laquo; 正则表达式的贪婪与非贪婪模式</a>
+        <a class="basic-alignment left" href="/blog/2013/02/04/use-baidu-translate-api-by-python/" title="Previous Post: Python使用百度翻译API">&laquo; Python使用百度翻译API</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/22/sicp-note-basic-element-of-program/" title="Next Post: 程序设计的基本元素——SICP阅读笔记">程序设计的基本元素——SICP阅读笔记 &raquo;</a>
       
     </p>
   </footer>
