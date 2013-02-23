@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: octopress | 横竖弯钩]]></title>
-  <link href="http://zgx.github.com/blog/categories/octopress/atom.xml" rel="self"/>
-  <link href="http://zgx.github.com/"/>
-  <updated>2013-02-22T21:12:46+08:00</updated>
-  <id>http://zgx.github.com/</id>
+  <link href="http://hswg.info/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://hswg.info/"/>
+  <updated>2013-02-23T11:20:06+08:00</updated>
+  <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[在Cygwin搭建Octopress]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/"/>
+    <link href="http://hswg.info/blog/2013/01/07/octopress-on-cygwin/"/>
     <updated>2013-01-07T15:03:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin</id>
+    <id>http://hswg.info/blog/2013/01/07/octopress-on-cygwin</id>
     <content type="html"><![CDATA[<p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
 当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
 

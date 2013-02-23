@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Markdown | 横竖弯钩]]></title>
-  <link href="http://zgx.github.com/blog/categories/markdown/atom.xml" rel="self"/>
-  <link href="http://zgx.github.com/"/>
-  <updated>2013-02-22T21:12:46+08:00</updated>
-  <id>http://zgx.github.com/</id>
+  <link href="http://hswg.info/blog/categories/markdown/atom.xml" rel="self"/>
+  <link href="http://hswg.info/"/>
+  <updated>2013-02-23T11:20:06+08:00</updated>
+  <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[使用Octopress写博客]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/04/using-octopress/"/>
+    <link href="http://hswg.info/blog/2013/01/04/using-octopress/"/>
     <updated>2013-01-04T14:50:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/04/using-octopress</id>
+    <id>http://hswg.info/blog/2013/01/04/using-octopress</id>
     <content type="html"><![CDATA[<p>用了一下,总结几点吧：</p>
 
 <ol>
@@ -31,9 +31,9 @@
   
   <entry>
     <title type="html"><![CDATA[Markdown语法]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/01/markdown/"/>
+    <link href="http://hswg.info/blog/2013/01/01/markdown/"/>
     <updated>2013-01-01T20:22:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/01/markdown</id>
+    <id>http://hswg.info/blog/2013/01/01/markdown</id>
     <content type="html"><![CDATA[<!--more-->
 
 

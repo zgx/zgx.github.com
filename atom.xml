@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[横竖弯钩]]></title>
-  <link href="http://zgx.github.com/atom.xml" rel="self"/>
-  <link href="http://zgx.github.com/"/>
-  <updated>2013-02-22T21:12:46+08:00</updated>
-  <id>http://zgx.github.com/</id>
+  <link href="http://hswg.info/atom.xml" rel="self"/>
+  <link href="http://hswg.info/"/>
+  <updated>2013-02-23T11:20:06+08:00</updated>
+  <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[程序设计的基本元素——SICP阅读笔记]]></title>
-    <link href="http://zgx.github.com/blog/2013/02/22/sicp-note-basic-element-of-program/"/>
+    <link href="http://hswg.info/blog/2013/02/22/sicp-note-basic-element-of-program/"/>
     <updated>2013-02-22T20:05:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/02/22/sicp-note-basic-element-of-program</id>
+    <id>http://hswg.info/blog/2013/02/22/sicp-note-basic-element-of-program</id>
     <content type="html"><![CDATA[<p>一种好的编程语言，不仅仅是一种指挥计算机执行任务的方式，它还应该成
 为一种框架，是我们能够在其中组织自己有关计算过程的思想。这样，当我
 们描述一个语言时，就需要将注意力放在这一语言所提供的，能够将简单认
@@ -107,9 +107,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python使用百度翻译API]]></title>
-    <link href="http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python/"/>
+    <link href="http://hswg.info/blog/2013/02/04/use-baidu-translate-api-by-python/"/>
     <updated>2013-02-04T18:30:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/02/04/use-baidu-translate-api-by-python</id>
+    <id>http://hswg.info/blog/2013/02/04/use-baidu-translate-api-by-python</id>
     <content type="html"><![CDATA[<p>谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。</p>
 
 <!--more-->
@@ -192,9 +192,9 @@ if __name__ == '__main__':
   
   <entry>
     <title type="html"><![CDATA[正则表达式的贪婪与非贪婪模式]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode/"/>
+    <link href="http://hswg.info/blog/2013/01/30/regex-greedy-and-non-greedy-mode/"/>
     <updated>2013-01-30T20:06:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/30/regex-greedy-and-non-greedy-mode</id>
+    <id>http://hswg.info/blog/2013/01/30/regex-greedy-and-non-greedy-mode</id>
     <content type="html"><![CDATA[<p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
 原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
 尽可能多的匹配。</p>
@@ -236,9 +236,9 @@ if __name__ == '__main__':
   
   <entry>
     <title type="html"><![CDATA[Python抓取网页]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/29/use-python-fetch-webpage/"/>
+    <link href="http://hswg.info/blog/2013/01/29/use-python-fetch-webpage/"/>
     <updated>2013-01-29T19:21:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/29/use-python-fetch-webpage</id>
+    <id>http://hswg.info/blog/2013/01/29/use-python-fetch-webpage</id>
     <content type="html"><![CDATA[<h2>真的很简单</h2>
 
 <p>最基本的抓取网页，真的很简单，一行代码就可以了</p>
@@ -253,9 +253,9 @@ html = urllib2.urlopen('http://thesite.com').read()
   
   <entry>
     <title type="html"><![CDATA[用Ajax方式上传文件]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/21/upload-files-with-ajax/"/>
+    <link href="http://hswg.info/blog/2013/01/21/upload-files-with-ajax/"/>
     <updated>2013-01-21T19:03:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/21/upload-files-with-ajax</id>
+    <id>http://hswg.info/blog/2013/01/21/upload-files-with-ajax</id>
     <content type="html"><![CDATA[<p>在HTML5出现之前，无刷新文件上传的思路一般是使用frame或flash。有一天，HTML5
 带来了XMLHttpRequest第二版，它为Ajax上传文件带来的可能。所以，如果还要支持
 IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
@@ -356,9 +356,9 @@ selFile.change(function(e){
   
   <entry>
     <title type="html"><![CDATA[Octopress技巧之设置关键字和描述]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress/"/>
+    <link href="http://hswg.info/blog/2013/01/11/set-keywords-in-orcopress/"/>
     <updated>2013-01-11T21:39:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/11/set-keywords-in-orcopress</id>
+    <id>http://hswg.info/blog/2013/01/11/set-keywords-in-orcopress</id>
     <content type="html"><![CDATA[<h3>关键字和描述</h3>
 
 <p>这里所说的关键字和描述是指网页<code>head</code>部分的元标签<code>meta</code>，是给搜索引擎看的，以此希望用户可以比较容易找到本站。
@@ -442,9 +442,9 @@ keywords: 技术，码农，单身, 单身，真的是单身
   
   <entry>
     <title type="html"><![CDATA[可爱的雪人]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/10/lovely-snowman/"/>
+    <link href="http://hswg.info/blog/2013/01/10/lovely-snowman/"/>
     <updated>2013-01-10T20:52:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/10/lovely-snowman</id>
+    <id>http://hswg.info/blog/2013/01/10/lovely-snowman</id>
     <content type="html"><![CDATA[<p>这是前几天晚上拍的照片，现在翻出来，突然发现挺好看的。贴出来分享下。</p>
 
 <!--more-->
@@ -456,9 +456,9 @@ keywords: 技术，码农，单身, 单身，真的是单身
   
   <entry>
     <title type="html"><![CDATA[把博客放在Github]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/10/bloging-on-github/"/>
+    <link href="http://hswg.info/blog/2013/01/10/bloging-on-github/"/>
     <updated>2013-01-10T09:09:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/10/bloging-on-github</id>
+    <id>http://hswg.info/blog/2013/01/10/bloging-on-github</id>
     <content type="html"><![CDATA[<p>故事是这样的，我开始想要在vim写博客，找到Markdown是写技术博客的很好用的一种标记语言，
 同时发现Github Pages可以托管用Markdown写的博客站点，然后就尝试在Github写博客。</p>
 
@@ -558,9 +558,9 @@ Github可以解析符合Jekyll规范的网站源码。</p>
   
   <entry>
     <title type="html"><![CDATA[在Otcopress使用社会化评论]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/09/using-social-comment/"/>
+    <link href="http://hswg.info/blog/2013/01/09/using-social-comment/"/>
     <updated>2013-01-09T00:15:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/09/using-social-comment</id>
+    <id>http://hswg.info/blog/2013/01/09/using-social-comment</id>
     <content type="html"><![CDATA[<p><em>在octopress中使用disqus很简单</em>，只要修改在配置文件“_config.yalm”：</p>
 
 <pre><code># Disqus Comments
@@ -609,9 +609,9 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
   
   <entry>
     <title type="html"><![CDATA[vim技巧之复制粘贴]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/08/vim-clipboard/"/>
+    <link href="http://hswg.info/blog/2013/01/08/vim-clipboard/"/>
     <updated>2013-01-08T13:37:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/08/vim-clipboard</id>
+    <id>http://hswg.info/blog/2013/01/08/vim-clipboard</id>
     <content type="html"><![CDATA[<h3>快速参考</h3>
 
 <ul>
@@ -632,9 +632,9 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
   
   <entry>
     <title type="html"><![CDATA[用BAE和百度云存储做了个简陋的图片上传应用]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/08/bae-pic/"/>
+    <link href="http://hswg.info/blog/2013/01/08/bae-pic/"/>
     <updated>2013-01-08T11:14:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/08/bae-pic</id>
+    <id>http://hswg.info/blog/2013/01/08/bae-pic</id>
     <content type="html"><![CDATA[<p>用BAE和百度云存储做了个简陋的图片存储应用，以后贴图就用这个来保存了。</p>
 
 <p>地址：<a href="http://picfile.duapp.com">http://picfile.duapp.com</a></p>
@@ -647,9 +647,9 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
   
   <entry>
     <title type="html"><![CDATA[在Cygwin搭建Octopress]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin/"/>
+    <link href="http://hswg.info/blog/2013/01/07/octopress-on-cygwin/"/>
     <updated>2013-01-07T15:03:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/07/octopress-on-cygwin</id>
+    <id>http://hswg.info/blog/2013/01/07/octopress-on-cygwin</id>
     <content type="html"><![CDATA[<p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
 当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
 
@@ -689,9 +689,9 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
   
   <entry>
     <title type="html"><![CDATA[linux笔记]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/07/linux-notes/"/>
+    <link href="http://hswg.info/blog/2013/01/07/linux-notes/"/>
     <updated>2013-01-07T11:27:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/07/linux-notes</id>
+    <id>http://hswg.info/blog/2013/01/07/linux-notes</id>
     <content type="html"><![CDATA[<p>设置系统代理</p>
 
 <pre><code>export http_proxy=http://user:password@host:port
@@ -701,9 +701,9 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
   
   <entry>
     <title type="html"><![CDATA[Python笔记]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/06/python-notes/"/>
+    <link href="http://hswg.info/blog/2013/01/06/python-notes/"/>
     <updated>2013-01-06T20:22:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/06/python-notes</id>
+    <id>http://hswg.info/blog/2013/01/06/python-notes</id>
     <content type="html"><![CDATA[<p>一些个人关于python的笔记</p>
 
 <!--more-->
@@ -734,9 +734,9 @@ html = urllib2.openurl('http://website.xx').read()
   
   <entry>
     <title type="html"><![CDATA[使用Octopress写博客]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/04/using-octopress/"/>
+    <link href="http://hswg.info/blog/2013/01/04/using-octopress/"/>
     <updated>2013-01-04T14:50:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/04/using-octopress</id>
+    <id>http://hswg.info/blog/2013/01/04/using-octopress</id>
     <content type="html"><![CDATA[<p>用了一下,总结几点吧：</p>
 
 <ol>
@@ -750,9 +750,9 @@ html = urllib2.openurl('http://website.xx').read()
   
   <entry>
     <title type="html"><![CDATA[Markdown语法]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/01/markdown/"/>
+    <link href="http://hswg.info/blog/2013/01/01/markdown/"/>
     <updated>2013-01-01T20:22:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/01/markdown</id>
+    <id>http://hswg.info/blog/2013/01/01/markdown</id>
     <content type="html"><![CDATA[<!--more-->
 
 
@@ -1626,9 +1626,9 @@ _   底线
   
   <entry>
     <title type="html"><![CDATA[2013, 你好]]></title>
-    <link href="http://zgx.github.com/blog/2013/01/01/new-year/"/>
+    <link href="http://hswg.info/blog/2013/01/01/new-year/"/>
     <updated>2013-01-01T00:00:00+08:00</updated>
-    <id>http://zgx.github.com/blog/2013/01/01/new-year</id>
+    <id>http://hswg.info/blog/2013/01/01/new-year</id>
     <content type="html"><![CDATA[<p>这是2013年第一天开始写的博客，这是要用一年来写的博客。</p>
 
 <p>这一年，我要做什么？我希望2014年能在这里吹嘘我有那些长进？我倒是想在这一刻拍脑袋列出个一二三四，犹如重要人物的重要讲话一般，但是重要讲话什么时候发挥过作用呢？</p>
