@@ -5,10 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>在Cygwin搭建Octopress - 横竖弯钩</title>
+  <title>使用Python处理图像 - 横竖弯钩</title>
  
-  <meta name="description" content="在Cygwin搭建Octopress Jan 7th, 2013 用了半天时间在Ubuntu搭建了octopress，跟着octopress的文档一步一步来就可以了。
-当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤： 直接用Cygwin setup. &hellip;">
+  <meta name="description" content="使用Python处理图像 Mar 3rd, 2013 PIL(Python Imaging Library)是Pytho下的一个图像处理库，支持多种图片格式，提供
+强大的图像处理和绘图功能。在官网
+下载即可使用，或者使用pip安装： pip install pil 使用Image模块 &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://hswg.info/blog/2013/01/07/octopress-on-cygwin/">
+  <link rel="canonical" href="http://hswg.info/blog/2013/03/03/python-processing-images/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">在Cygwin搭建Octopress</h1>
+      <h1 class="entry-title">使用Python处理图像</h1>
     
     
       <p class="meta">
@@ -95,54 +96,95 @@
   
 
 
-<time datetime="2013-01-07T15:03:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2013</time>
+<time datetime="2013-03-03T21:29:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>用了半天时间在Ubuntu搭建了octopress，跟着octopress的<a href="http://octopress.org/docs/setup/">文档</a>一步一步来就可以了。
-当我在本机的cygwin环境重复这一操作的时候，出现了一个小问题，记录一下。下面是操作步骤：</p>
+<div class="entry-content"><p>PIL(Python Imaging Library)是Pytho下的一个图像处理库，支持多种图片格式，提供
+强大的图像处理和绘图功能。在<a href="http://www.pythonware.com/products/pil/index.htm">官网</a>
+下载即可使用，或者使用pip安装：</p>
+
+<pre><code>pip install pil
+</code></pre>
 
 <!--more-->
 
 
-<ol>
-<li>直接用Cygwin setup.exe安装Ruby，目前的版本就是文档要求的1.9.3，OK。</li>
-<li>安装bundler
+<h2>使用Image模块</h2>
 
-<pre><code> gem install bundler
-</code></pre></li>
-<li>进入octopress目录，执行bundle install
+<p>Image是PIL中的一个类，是图像的抽象。同时提供一系列工厂方法，包括从文件加载图像
+、创建新图像。</p>
 
-<pre><code> cd octopress
- bundle install
+<p>引用Image模块</p>
+
+<pre><code>from PIL import Image
 </code></pre>
 
-问题出现了，关键提示如下：
+<p>从文件加载图像，并返回Image的实例：</p>
 
-<pre><code> posix-spawn.c:9:19: 致命错误：spawn.h：No such file or directory
-</code></pre></li>
-<li>上面的问题是由于posix-spawn的bug引起的，需要自己编译安装：
+<pre><code>im = Image.open('filename.jpg')
+#这里可以传入文件夹，或者文件对象
+</code></pre>
 
-<pre><code> gem install rake-compiler -v 0.7.6
- git clone git://github.com/rtomayko/posix-spawn.git
- cd posix-spawn
- rake gem
- gem install pkg/posix-spawn-0.3.6
-</code></pre></li>
-<li>再执行<code>bundle install</code>就没用问题了。</li>
-<li>享受octopress吧.</li>
-</ol>
+<h3>创建缩略图</h3>
 
+<p>这是我使用PIL的直接原因，优先学习。查了下Image的文档，有一个方法叫<code>thumbnail</code>,
+我想我找到答案了。</p>
+
+<p><strong>thumbnail(size, resample=0)</strong></p>
+
+<p>功能：创建缩略图。本方法会修改对象自身，如果要保留原来的图片，请想调用Copy，保存下来。
+返回：None。</p>
+
+<p>参数：size:缩略图的大小，如：(100,75)。注意，这不是无条件转换的，比原图大的不转，
+会保留图片的比例，实际缩小比例是：min(缩略长/原长, 缩略宽/原宽).</p>
+
+<p>resample:重采样模式。支持模式有：NEAREST, BILINEAR, BICUBIC, or ANTIALIAS。</p>
+
+<p>使用示例：</p>
+
+<pre><code>from PIL import Image
+im = Image.open('mypic.jpg')   #加载图片，创建Image实例
+im.thumbnail((120,100), Image.ANTIALIAS)  #抗锯齿模式产生缩略图
+im.save('thumb_mypic.jpg')     #保存
+</code></pre>
+
+<p>小技巧：如果想要产生的缩略图的宽度固定，高度根据比例变化，可以吧高度设为一个很大值。如：</p>
+
+<pre><code>im.thumbnail((100, 0xfffff))    #宽度为100px。除非高度大于0xfffff
+</code></pre>
+
+<h3>其他我用到的功能</h3>
+
+<p>下面简单介绍下PIL的其他技能。</p>
+
+<p><strong>resize(size, filter)</strong> => image</p>
+
+<p>传入参数size为元组(width, height), filter的可以模式有：NEAREST，BILINEAR，BICUBIC，ANTIALIAS。</p>
+
+<p>返回改变大小后的Image对象。这个跟缩略图不一样，这里的size是无条件的，会改变图片比例。</p>
+
+<p><strong>rotate(angle)</strong> => image
+返回经过旋转处理的图片。</p>
+
+<p>未完待续。。。</p>
+
+<p>续集请查看文档：http://www.pythonware.com/library/pil/handbook/image.htm</p>
+
+<h3>遇到的问题</h3>
+
+<p>处理jepg格式的文件时，报错&#8221;IOError: decoder jpeg not available&#8221;。
+解决办法，安装libjpeg，然后重新安装PIL。</p>
 </div>
 
 
   
   <p>
 	作者：<a href="http://hswg.info" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://hswg.info/blog/2013/01/07/octopress-on-cygwin/" title="在Cygwin搭建Octopress">http://hswg.info/blog/2013/01/07/octopress-on-cygwin/</a>
+	原文地址：<a href="http://hswg.info/blog/2013/03/03/python-processing-images/" title="使用Python处理图像">http://hswg.info/blog/2013/03/03/python-processing-images/</a>
   </p>
   
   <footer>
@@ -164,14 +206,8 @@
   
 
 
-<time datetime="2013-01-07T15:03:00+08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2013</time>
+<time datetime="2013-03-03T21:29:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
 
 
     </p>
@@ -185,10 +221,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/07/linux-notes/" title="Previous Post: linux笔记">&laquo; linux笔记</a>
+        <a class="basic-alignment left" href="/blog/2013/02/22/sicp-note-basic-element-of-program/" title="Previous Post: 程序设计的基本元素——SICP阅读笔记">&laquo; 程序设计的基本元素——SICP阅读笔记</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/08/bae-pic/" title="Next Post: 用BAE和百度云存储做了个简陋的图片上传应用">用BAE和百度云存储做了个简陋的图片上传应用 &raquo;</a>
       
     </p>
   </footer>

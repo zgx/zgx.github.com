@@ -7,7 +7,13 @@
   <meta charset="utf-8">
   <title>横竖弯钩</title>
  
-  <meta name="description" content=" 用BAE和百度云存储做了个简陋的图片存储应用，以后贴图就用这个来保存了。 地址：http://picfile.duapp.com 测试一下： ">
+  <meta name="description" content="快速参考 粘贴系统剪切板的内容按Shift+Insert就可以了
+使用:reg命令查看各个剪切板缓冲区的内容
+粘贴命令是p
+粘贴剪贴板9的内容："9p;如果有安装gvim，命令"+p可以粘贴系统前切板内容
+yy是复制一行
+先按v，移动光标选中内容，按y可以复制选中区块
+" &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -75,6 +81,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/08/vim-clipboard/">Vim技巧之复制粘贴</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-08T13:37:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>快速参考</h3>
+
+<ul>
+<li>粘贴系统剪切板的内容按<code>Shift+Insert</code>就可以了</li>
+<li>使用<code>:reg</code>命令查看各个剪切板缓冲区的内容</li>
+<li>粘贴命令是<code>p</code></li>
+<li>粘贴剪贴板9的内容：<code>"9p</code>;如果有安装gvim，命令<code>"+p</code>可以粘贴系统前切板内容</li>
+<li><code>yy</code>是复制一行</li>
+<li>先按<code>v</code>，移动光标选中内容，按<code>y</code>可以复制选中区块</li>
+<li><code>"7y</code>表示复制内容到剪切板7</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/08/vim-clipboard/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -380,6 +438,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/03/python-processing-images/">使用Python处理图像</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/22/sicp-note-basic-element-of-program/">程序设计的基本元素——SICP阅读笔记</a>
       </li>
     
@@ -393,10 +455,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/29/use-python-fetch-webpage/">Python抓取网页</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/21/upload-files-with-ajax/">用Ajax方式上传文件</a>
       </li>
     
   </ul>
