@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>使用Octopress写博客 - 横竖弯钩</title>
+  <title>用Python在SAE写一个生成缩略图的API - 横竖弯钩</title>
  
-  <meta name="description" content="使用Octopress写博客 Jan 4th, 2013 用了一下,总结几点吧： 在本地生成Html
-使用Jekyll生成
-不觉得比在Github用Jekyll输出高明多少 作者：横竖弯钩 原文地址：http://hswg.info/blog/2013/01/04/using-octopress &hellip;">
+  <meta name="description" content="用Python在SAE写一个生成缩略图的API Mar 21st, 2013 其实这是一个无聊的工具，此API有几大功能： 1.通常会让你的图片加载变慢
+1.消耗我的云豆
+1.你不需要自己保存缩略图 调用示例： http://xtask.sinaapp.com/thumbnail.png?src &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://hswg.info/blog/2013/01/04/using-octopress/">
+  <link rel="canonical" href="http://hswg.info/blog/2013/03/21/write-a-thumbnail-api/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">使用Octopress写博客</h1>
+      <h1 class="entry-title">用Python在SAE写一个生成缩略图的API</h1>
     
     
       <p class="meta">
@@ -96,28 +96,68 @@
   
 
 
-<time datetime="2013-01-04T14:50:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+<time datetime="2013-03-21T21:38:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>用了一下,总结几点吧：</p>
+<div class="entry-content"><p>其实这是一个无聊的工具，此API有几大功能：</p>
 
-<ol>
-<li>在本地生成Html</li>
-<li>使用Jekyll生成</li>
-<li>不觉得比在Github用Jekyll输出高明多少</li>
-</ol>
+<p>1.通常会让你的图片加载变慢
+1.消耗我的云豆
+1.你不需要自己保存缩略图</p>
 
+<!--more-->
+
+
+<p><img src="http://xtask.sinaapp.com/thumbnail.png?src=http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg&amp;width=300&amp;height=300" alt="二雪人" /></p>
+
+<p>调用示例：</p>
+
+<blockquote><p>http://xtask.sinaapp.com/thumbnail.png?src=http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg&amp;width=300&amp;height=300</p></blockquote>
+
+<p>参数说明：
+- src：原图片地址
+- width:最大宽度
+- height：最大高度
+- 注：不会改变比例，不会把图片变大。</p>
+
+<p>基于Tornado写的，简单贴下代码，有问题可以留言哦。</p>
+
+<pre><code>class ThumbMaker(RequestHandler):
+    def get(self):
+        try:
+            srcUrl = self.get_argument('src', None)
+            if not srcUrl:
+                    raise Exception
+            width = int(self.get_argument('width', 0xfffff))
+            height = int(self.get_argument('height', 0xfffff))
+
+            rsp = urllib2.urlopen(srcUrl)
+            imgIo = StringIO(rsp.read())
+            im = Image.open(imgIo)
+            #if im.mode != "RGB":
+            #       im = im.convert("RGB")
+            im.thumbnail((width, height), Image.ANTIALIAS)
+            imgOut = StringIO()
+            im.save(imgOut, 'png')
+            self.set_header('Content-Type', 'image/png')
+            self.write(imgOut.getvalue())
+        except Exception, e:
+            print str(e)
+            self.set_header('Content-Type', 'image/png')
+            self.write(open('nopic.png').read())
+        return
+</code></pre>
 </div>
 
 
   
   <p>
 	作者：<a href="http://hswg.info" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://hswg.info/blog/2013/01/04/using-octopress/" title="使用Octopress写博客">http://hswg.info/blog/2013/01/04/using-octopress/</a>
+	原文地址：<a href="http://hswg.info/blog/2013/03/21/write-a-thumbnail-api/" title="用Python在SAE写一个生成缩略图的API">http://hswg.info/blog/2013/03/21/write-a-thumbnail-api/</a>
   </p>
   
   <footer>
@@ -139,14 +179,8 @@
   
 
 
-<time datetime="2013-01-04T14:50:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+<time datetime="2013-03-21T21:38:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/markdown/'>Markdown</a>
-  
-</span>
 
 
     </p>
@@ -160,10 +194,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/01/markdown/" title="Previous Post: Markdown语法">&laquo; Markdown语法</a>
+        <a class="basic-alignment left" href="/blog/2013/03/03/python-processing-images/" title="Previous Post: 使用Python处理图像">&laquo; 使用Python处理图像</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/01/06/python-notes/" title="Next Post: Python笔记">Python笔记 &raquo;</a>
       
     </p>
   </footer>

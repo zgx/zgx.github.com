@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://hswg.info/atom.xml" rel="self"/>
   <link href="http://hswg.info/"/>
-  <updated>2013-03-04T18:06:43+08:00</updated>
+  <updated>2013-03-21T21:52:47+08:00</updated>
   <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -12,6 +12,62 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[用Python在SAE写一个生成缩略图的API]]></title>
+    <link href="http://hswg.info/blog/2013/03/21/write-a-thumbnail-api/"/>
+    <updated>2013-03-21T21:38:00+08:00</updated>
+    <id>http://hswg.info/blog/2013/03/21/write-a-thumbnail-api</id>
+    <content type="html"><![CDATA[<p>其实这是一个无聊的工具，此API有几大功能：</p>
+
+<p>1.通常会让你的图片加载变慢
+1.消耗我的云豆
+1.你不需要自己保存缩略图</p>
+
+<!--more-->
+
+
+<p><img src="http://xtask.sinaapp.com/thumbnail.png?src=http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg&amp;width=300&amp;height=300" alt="二雪人" /></p>
+
+<p>调用示例：</p>
+
+<blockquote><p>http://xtask.sinaapp.com/thumbnail.png?src=http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg&amp;width=300&amp;height=300</p></blockquote>
+
+<p>参数说明：
+- src：原图片地址
+- width:最大宽度
+- height：最大高度
+- 注：不会改变比例，不会把图片变大。</p>
+
+<p>基于Tornado写的，简单贴下代码，有问题可以留言哦。</p>
+
+<pre><code>class ThumbMaker(RequestHandler):
+    def get(self):
+        try:
+            srcUrl = self.get_argument('src', None)
+            if not srcUrl:
+                    raise Exception
+            width = int(self.get_argument('width', 0xfffff))
+            height = int(self.get_argument('height', 0xfffff))
+
+            rsp = urllib2.urlopen(srcUrl)
+            imgIo = StringIO(rsp.read())
+            im = Image.open(imgIo)
+            #if im.mode != "RGB":
+            #       im = im.convert("RGB")
+            im.thumbnail((width, height), Image.ANTIALIAS)
+            imgOut = StringIO()
+            im.save(imgOut, 'png')
+            self.set_header('Content-Type', 'image/png')
+            self.write(imgOut.getvalue())
+        except Exception, e:
+            print str(e)
+            self.set_header('Content-Type', 'image/png')
+            self.write(open('nopic.png').read())
+        return
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用Python处理图像]]></title>
