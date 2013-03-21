@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://hswg.info/atom.xml" rel="self"/>
   <link href="http://hswg.info/"/>
-  <updated>2013-03-21T21:52:47+08:00</updated>
+  <updated>2013-03-21T21:55:30+08:00</updated>
   <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -20,9 +20,12 @@
     <id>http://hswg.info/blog/2013/03/21/write-a-thumbnail-api</id>
     <content type="html"><![CDATA[<p>其实这是一个无聊的工具，此API有几大功能：</p>
 
-<p>1.通常会让你的图片加载变慢
-1.消耗我的云豆
-1.你不需要自己保存缩略图</p>
+<ol>
+<li>通常会让你的图片加载变慢</li>
+<li>消耗我的云豆</li>
+<li>你不需要自己保存缩略图</li>
+</ol>
+
 
 <!--more-->
 
@@ -33,11 +36,15 @@
 
 <blockquote><p>http://xtask.sinaapp.com/thumbnail.png?src=http://bcs.duapp.com/picfile/2013/1/2eaccc638a524c63.jpg&amp;width=300&amp;height=300</p></blockquote>
 
-<p>参数说明：
-- src：原图片地址
-- width:最大宽度
-- height：最大高度
-- 注：不会改变比例，不会把图片变大。</p>
+<p>参数说明：</p>
+
+<ul>
+<li>src：原图片地址</li>
+<li>width:最大宽度</li>
+<li>height：最大高度</li>
+<li>注：不会改变比例，不会把图片变大。</li>
+</ul>
+
 
 <p>基于Tornado写的，简单贴下代码，有问题可以留言哦。</p>
 
