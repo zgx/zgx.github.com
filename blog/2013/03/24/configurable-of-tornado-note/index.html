@@ -5,10 +5,9 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Python使用百度翻译API - 横竖弯钩</title>
+  <title>tornado源码阅读笔记——Configurable - 横竖弯钩</title>
  
-  <meta name="description" content="Python使用百度翻译API Feb 4th, 2013 谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。 使用前提 你要有百度的api_key。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
-的API KEY就可以用了。 &hellip;">
+  <meta name="description" content="tornado源码阅读笔记——Configurable Mar 24th, 2013 Configurable类位于tornado.utils模块，继承它的类的可以承担工厂方法的职责，可以根据配置或环境决定示例化那个子类。 在tornado中， &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -18,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://hswg.info/blog/2013/02/04/use-baidu-translate-api-by-python/">
+  <link rel="canonical" href="http://hswg.info/blog/2013/03/24/configurable-of-tornado-note/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +78,7 @@
   
   <header>
     
-      <h1 class="entry-title">Python使用百度翻译API</h1>
+      <h1 class="entry-title">tornado源码阅读笔记——Configurable</h1>
     
     
       <p class="meta">
@@ -95,97 +94,98 @@
   
 
 
-<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+<time datetime="2013-03-24T03:29:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>谷歌了一下，发现谷歌翻译API竟然要收费。退而求其次次，用Python写了个调用百度翻译API的工具。</p>
+<div class="entry-content"><p>Configurable类位于tornado.utils模块，继承它的类的可以承担工厂方法的职责，可以根据配置或环境决定示例化那个子类。</p>
+
+<p>在tornado中，IOLoop便是继承Confifurable的的一个例子。IOLoop的职责有定义操作接口和根据说在的操作系统决定实例化那个子类，
+如下图，Linux支持epoll，BSD支持kqueue，而在Windows就只能选择Select了。用户在使用IOLoop时，是需要IOLoop接口，
+而不必关注实际使用的是那个实现，而样写出来的代码可移植性就更好了。</p>
 
 <!--more-->
 
 
-<h3>使用前提</h3>
+<p><img src="http://bcs.duapp.com/picfile/2013/3/76f7caa0b2bcfde0.png" alt="ULM图" /></p>
 
-<p>你要有百度的<code>api_key</code>。如果你玩过百度的运环境（BAE），你已经有了。随便找一个应用
-的API KEY就可以用了。
-如何没用，你可以你可以在<a href="http://developer.baidu.com/wiki/index.php?title=%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E9%A6%96%E9%A1%B5/%E7%BD%91%E7%AB%99%E6%8E%A5%E5%85%A5/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97">这里</a>
-了解如何获得app key。顺便还可以玩一下BAE。</p>
-
-<h3>百度翻译API</h3>
-
-<p><strong>URL</strong></p>
-
-<pre><code>http://openapi.baidu.com/public/2.0/bmt/translate
-</code></pre>
-
-<p><strong>请求参数</strong></p>
+<p>继承Configurable的类应该实现如下方法：</p>
 
 <ul>
-<li>from. 源语言语种：语言代码或auto</li>
-<li>to. 目标语言语种：语言代码或auto</li>
-<li>client_id. 上面说的api_key</li>
-<li>q. 待翻译内容</li>
+<li>configurable_base. 这是一个类方法，一般返回</li>
+<li>configurable_default. 类方法。此方法由子类实现，应当返回一个恰当的类型。这个就是工厂方法实现的地方。</li>
+<li>initialize. 实例方法。实例后由Configurable调用，代替<strong>init</strong>的作用。</li>
 </ul>
 
 
-<p><strong>返回内容</strong>
-JSON字符串。示例如下：</p>
+<p>下面是Configurable的<strong>new</strong>方法，Configurable的魔法正是由这个方法执行的。</p>
 
-<pre><code>{"from":"en",
- "to":"zh",
- "trans_result":[{"src":"today","dst":"\u4eca\u5929"}]}
-</code></pre>
-
-<p>trans_result就是我们需要的翻译结果了。注意trans_result是数组，可能会没有或者有多个结果返回吧，
-不过目前我还没碰到过。</p>
-
-<h3>Python调用示例</h3>
-
-<p>在Python使用这个API很简单，简单的就是范围URL，获取结果就是了。下面的代码比较偷懒，权当参考。</p>
-
-<pre><code># -*- coding: utf-8 -*-
-import urllib2
-import urllib
-import json
-
-DU_TRANS_URL = 'http://openapi.baidu.com/public/2.0/bmt/translate?from=%s&amp;to=%s&amp;q=%s&amp;client_id=%s'
-DU_CLIENT_ID = 'yourkeyyourkeyyourkeyyourkey'
-
-def trans(slang, tlang, trans_str):
-    du_url = DU_TRANS_URL % (slang, tlang, urllib.quote(trans_str), DU_CLIENT_ID)
-    try:
-        rsp = urllib2.urlopen(du_url)
-    except Exception, e:
-        raise Exception('Connecting to server fail:' + str(e)) 
-    rs = json.load(rsp)
-    if 'error_code' in rs:
-        raise Exception('trans error:' + rs['error_msg'])
-    if rs['trans_result']:
-        return rs['trans_result'][0]['dst']
+<pre><code>def __new__(cls, **kwargs):
+    base = cls.configurable_base()
+    args = {}
+    if cls is base:
+        impl = cls.configured_class()
+        if base.__impl_kwargs:
+            args.update(base.__impl_kwargs)
     else:
-        raise Exception('No result')
-
-def c2e(src):
-    return trans('zh', 'en', src)
-
-def e2c(src):
-    return trans('en', 'zh', src)
-
-if __name__ == '__main__':
-    print c2e('这是中文')
+        impl = cls
+    args.update(kwargs)
+    instance = super(Configurable, cls).__new__(impl)
+    # initialize vs __init__ chosen for compatiblity with AsyncHTTPClient
+    # singleton magic.  If we get rid of that we can switch to __init__
+    # here too.
+    instance.initialize(**args)
+    return instance
 </code></pre>
 
-<p>我们的工具箱又多了一个翻译功能了。哈哈哈。</p>
+<p>下面我们看下IOLoop是如何实现工厂的职责的。
+IOLoop一般只用一个实例，下面是获得IOLoop的全局单例的方法，可以看到这里并没有为IOLoop选择具体的实现。</p>
+
+<pre><code>@staticmethod
+def instance():
+    if not hasattr(IOLoop, "_instance"):
+        with IOLoop._instance_lock:
+            if not hasattr(IOLoop, "_instance"):
+                # New instance after double check
+                IOLoop._instance = IOLoop()
+    return IOLoop._instance
+</code></pre>
+
+<p>下面来看 configurable方法，很简单，就是返回IOLoop类。</p>
+
+<pre><code>@classmethod
+def configurable_base(cls):
+    return IOLoop
+</code></pre>
+
+<p>接着看configurable_default方法，这里就是IOLoop根据平台，选择具体实现的地方了。</p>
+
+<pre><code>@classmethod
+def configurable_default(cls):
+    if hasattr(select, "epoll") or sys.platform.startswith('linux'):
+        try:
+            from tornado.platform.epoll import EPollIOLoop
+            return EPollIOLoop
+        except ImportError:
+            gen_log.warning("unable to import EPollIOLoop, falling back to SelectIOLoop")
+            pass
+    if hasattr(select, "kqueue"):
+        # Python 2.6+ on BSD or Mac
+        from tornado.platform.kqueue import KQueueIOLoop
+        return KQueueIOLoop
+    from tornado.platform.select import SelectIOLoop
+    return SelectIOLoop
+</code></pre>
 </div>
 
 
   
   <p>
 	作者：<a href="http://hswg.info" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://hswg.info/blog/2013/02/04/use-baidu-translate-api-by-python/" title="Python使用百度翻译API">http://hswg.info/blog/2013/02/04/use-baidu-translate-api-by-python/</a>
+	原文地址：<a href="http://hswg.info/blog/2013/03/24/configurable-of-tornado-note/" title="tornado源码阅读笔记——Configurable">http://hswg.info/blog/2013/03/24/configurable-of-tornado-note/</a>
   </p>
   
   <footer>
@@ -207,7 +207,7 @@ if __name__ == '__main__':
   
 
 
-<time datetime="2013-02-04T18:30:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+<time datetime="2013-03-24T03:29:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2013</time>
       
 
 
@@ -222,10 +222,8 @@ if __name__ == '__main__':
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/" title="Previous Post: 正则表达式的贪婪与非贪婪模式">&laquo; 正则表达式的贪婪与非贪婪模式</a>
+        <a class="basic-alignment left" href="/blog/2013/03/21/write-a-thumbnail-api/" title="Previous Post: 用Python在SAE写一个生成缩略图的API">&laquo; 用Python在SAE写一个生成缩略图的API</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/22/sicp-note-basic-element-of-program/" title="Next Post: 程序设计的基本元素——SICP阅读笔记">程序设计的基本元素——SICP阅读笔记 &raquo;</a>
       
     </p>
   </footer>

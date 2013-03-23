@@ -7,9 +7,8 @@
   <meta charset="utf-8">
   <title>横竖弯钩</title>
  
-  <meta name="description" content=" 其实这是一个无聊的工具，此API有几大功能： 通常会让你的图片加载变慢
-消耗我的云豆
-你不需要自己保存缩略图 ">
+  <meta name="description" content="Configurable类位于tornado.utils模块，继承它的类的可以承担工厂方法的职责，可以根据配置或环境决定示例化那个子类。 在tornado中，IOLoop便是继承Confifurable的的一个例子。IOLoop的职责有定义操作接口和根据说在的操作系统决定实例化那个子类，
+如下图 &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -77,6 +76,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/24/configurable-of-tornado-note/">tornado源码阅读笔记——Configurable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-24T03:29:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Configurable类位于tornado.utils模块，继承它的类的可以承担工厂方法的职责，可以根据配置或环境决定示例化那个子类。</p>
+
+<p>在tornado中，IOLoop便是继承Confifurable的的一个例子。IOLoop的职责有定义操作接口和根据说在的操作系统决定实例化那个子类，
+如下图，Linux支持epoll，BSD支持kqueue，而在Windows就只能选择Select了。用户在使用IOLoop时，是需要IOLoop接口，
+而不必关注实际使用的是那个实现，而样写出来的代码可移植性就更好了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/03/24/configurable-of-tornado-note/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -473,48 +517,6 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/10/bloging-on-github/">把博客放在Github</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-10T09:09:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>故事是这样的，我开始想要在vim写博客，找到Markdown是写技术博客的很好用的一种标记语言，
-同时发现Github Pages可以托管用Markdown写的博客站点，然后就尝试在Github写博客。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/10/bloging-on-github/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -530,6 +532,10 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/03/24/configurable-of-tornado-note/">tornado源码阅读笔记——Configurable</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/21/write-a-thumbnail-api/">用Python在SAE写一个生成缩略图的API</a>
       </li>
     
@@ -543,10 +549,6 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
     
       <li class="post">
         <a href="/blog/2013/02/04/use-baidu-translate-api-by-python/">Python使用百度翻译API</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/30/regex-greedy-and-non-greedy-mode/">正则表达式的贪婪与非贪婪模式</a>
       </li>
     
   </ul>
