@@ -7,8 +7,8 @@
   <meta charset="utf-8">
   <title>横竖弯钩</title>
  
-  <meta name="description" content="Configurable类位于tornado.utils模块，继承它的类的可以承担工厂方法的职责，可以根据配置或环境决定示例化那个子类。 在tornado中，IOLoop便是继承Confifurable的的一个例子。IOLoop的职责有定义操作接口和根据说在的操作系统决定实例化那个子类，
-如下图 &hellip;">
+  <meta name="description" content="安装squid sudo apt-get install squid squid配置 squid的配置文件在：/etc/squid3/squid.conf。这个文件有很详细的说明，
+不过对于我来说是太啰嗦了。记下几个配置要点，以后照着操作就是了。 找到http_access deny all， &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -76,6 +76,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/20/setup-proxy-server-on-ubuntu/">Ubuntu下搭建代理服务器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-20T20:30:00+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>安装squid</h2>
+
+<pre><code>sudo apt-get install squid
+</code></pre>
+
+<h2>squid配置</h2>
+
+<p>squid的配置文件在：<code>/etc/squid3/squid.conf</code>。这个文件有很详细的说明，
+不过对于我来说是太啰嗦了。记下几个配置要点，以后照着操作就是了。</p>
+
+<p>找到<code>http_access deny all</code>，将<code>deny</code>改成<code>allow</code>。意思是允许任何IP使用这个代理。</p>
+
+<pre><code>http_access allow all
+</code></pre>
+
+<p>配置端口，这是服务器的监听端口，也就是客户端连接服务器时配置的端口，这里保持默认。</p>
+
+<pre><code>http_port 3128
+</code></pre>
+
+<p>缓存大小设置</p>
+
+<pre><code>cache\_mem 32 MB #vps的配置文件在内存很小，还是节省点吧。
+</code></pre>
+
+<p>重启squid</p>
+
+<pre><code>sudo service squid restart
+</code></pre>
+
+<p>然后在客户端设置代理测试即可。</p>
+
+<p>现在这个配置是运行任何IP匿名访问的，可以配置基于用户名密码的访问控制，目前用不到，
+以后再写了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -476,47 +545,6 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/10/lovely-snowman/">可爱的雪人</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-10T20:52:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是前几天晚上拍的照片，现在翻出来，突然发现挺好看的。贴出来分享下。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/10/lovely-snowman/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -532,6 +560,10 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/04/20/setup-proxy-server-on-ubuntu/">ubuntu下搭建代理服务器</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/03/24/configurable-of-tornado-note/">tornado源码阅读笔记——Configurable</a>
       </li>
     
@@ -545,10 +577,6 @@ IE6什么的就不必考虑这个方法了，甚至IE9也不行。</p>
     
       <li class="post">
         <a href="/blog/2013/02/22/sicp-note-basic-element-of-program/">程序设计的基本元素——SICP阅读笔记</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/02/04/use-baidu-translate-api-by-python/">Python使用百度翻译API</a>
       </li>
     
   </ul>

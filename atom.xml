@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://hswg.info/atom.xml" rel="self"/>
   <link href="http://hswg.info/"/>
-  <updated>2013-03-24T03:37:13+08:00</updated>
+  <updated>2013-04-21T00:16:06+08:00</updated>
   <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ubuntu下搭建代理服务器]]></title>
+    <link href="http://hswg.info/blog/2013/04/20/setup-proxy-server-on-ubuntu/"/>
+    <updated>2013-04-20T20:30:00+08:00</updated>
+    <id>http://hswg.info/blog/2013/04/20/setup-proxy-server-on-ubuntu</id>
+    <content type="html"><![CDATA[<h2>安装squid</h2>
+
+<pre><code>sudo apt-get install squid
+</code></pre>
+
+<h2>squid配置</h2>
+
+<p>squid的配置文件在：<code>/etc/squid3/squid.conf</code>。这个文件有很详细的说明，
+不过对于我来说是太啰嗦了。记下几个配置要点，以后照着操作就是了。</p>
+
+<p>找到<code>http_access deny all</code>，将<code>deny</code>改成<code>allow</code>。意思是允许任何IP使用这个代理。</p>
+
+<pre><code>http_access allow all
+</code></pre>
+
+<p>配置端口，这是服务器的监听端口，也就是客户端连接服务器时配置的端口，这里保持默认。</p>
+
+<pre><code>http_port 3128
+</code></pre>
+
+<p>缓存大小设置</p>
+
+<pre><code>cache\_mem 32 MB #vps的配置文件在内存很小，还是节省点吧。
+</code></pre>
+
+<p>重启squid</p>
+
+<pre><code>sudo service squid restart
+</code></pre>
+
+<p>然后在客户端设置代理测试即可。</p>
+
+<p>现在这个配置是运行任何IP匿名访问的，可以配置基于用户名密码的访问控制，目前用不到，
+以后再写了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[tornado源码阅读笔记——Configurable]]></title>
@@ -1853,23 +1895,6 @@ _   底线
 
 
 <p>*** 如有更好的 Markdown 免费编辑器推荐，请到<a href="https://gitcafe.com/riku/Markdown-Syntax-CN/tickets/1">这里反馈</a>，谢谢！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013, 你好]]></title>
-    <link href="http://hswg.info/blog/2013/01/01/new-year/"/>
-    <updated>2013-01-01T00:00:00+08:00</updated>
-    <id>http://hswg.info/blog/2013/01/01/new-year</id>
-    <content type="html"><![CDATA[<p>这是2013年第一天开始写的博客，这是要用一年来写的博客。</p>
-
-<p>这一年，我要做什么？我希望2014年能在这里吹嘘我有那些长进？我倒是想在这一刻拍脑袋列出个一二三四，犹如重要人物的重要讲话一般，但是重要讲话什么时候发挥过作用呢？</p>
-
-<!--more-->
-
-
-<p>回首2012，一句话：也就那样吧。去年最大的改变就是由学校步入社会了，去年二月份开始实习，不算中途学校的时间的话，也快一年了。
-作为一个码农，接触的人并不比学校复杂多少，说自己步入社会还真有点脸红。</p>
 ]]></content>
   </entry>
   
