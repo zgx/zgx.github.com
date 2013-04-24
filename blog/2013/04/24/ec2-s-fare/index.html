@@ -5,11 +5,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>正则表达式的贪婪与非贪婪模式 - 横竖弯钩</title>
+  <title>EC2产生费用了——源于匿名代理 - 横竖弯钩</title>
  
-  <meta name="description" content="正则表达式的贪婪与非贪婪模式 Jan 30th, 2013 用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
-原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
-尽可能多的匹配。 如正则表达式 a.*b 匹配 a3obs5bg 得到的结果是： a3obs5b &hellip;">
+  <meta name="description" content="EC2产生费用了——源于匿名代理 Apr 24th, 2013 申请了亚马逊一年的免费实例。一个月以来都没有产生什么费用（除了申请了公网IP
+一天没用绑定实例产生的0.07刀），前台一天之内突然产生了11刀的费用，当时我震惊了。 这一切原因手贱用squid搭了个代理服务器，当时懒得设用户验证， &hellip;">
   
   <meta name="author" content="横竖弯钩">
 
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://hswg.info/blog/2013/01/30/regex-greedy-and-non-greedy-mode/">
+  <link rel="canonical" href="http://hswg.info/blog/2013/04/24/ec2-s-fare/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -80,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">正则表达式的贪婪与非贪婪模式</h1>
+      <h1 class="entry-title">EC2产生费用了——源于匿名代理</h1>
     
     
       <p class="meta">
@@ -96,56 +95,30 @@
   
 
 
-<time datetime="2013-01-30T20:06:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+<time datetime="2013-04-24T11:12:00+08:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>用正则表达式提取抓下来的网页时，得到的字符串总是比预料的多。
-原来Python的正则表达式默认是贪婪的。贪婪的意思就是匹配时会
-尽可能多的匹配。</p>
+<div class="entry-content"><p>申请了亚马逊一年的免费实例。一个月以来都没有产生什么费用（除了申请了公网IP
+一天没用绑定实例产生的0.07刀），前台一天之内突然产生了11刀的费用，当时我震惊了。</p>
 
-<!--more-->
+<p><img src="http://bcs.duapp.com/picfile/2013/4/0fb8d280dde1d485.png" alt="EC2 FARE" /></p>
 
+<p>这一切原因手贱用squid搭了个代理服务器，当时懒得设用户验证，弄成匿名代理了，
+杯具就此开始。到现在各个代理信息站点还留着那个服务器的匿名代理信息。在网络
+上开任何端口都是逃不过各种扫描的，侥幸是不存在的。</p>
 
-<p>如正则表达式</p>
-
-<pre><code>a.*b
-</code></pre>
-
-<p>匹配</p>
-
-<pre><code>a3obs5bg
-</code></pre>
-
-<p>得到的结果是：</p>
-
-<pre><code>a3obs5b
-</code></pre>
-
-<p>如果实际想要找的是：<code>a3ob</code> 该怎么办呢？把匹配模式改为非贪婪
-的就可以了。</p>
-
-<pre><code>a.*?b
-</code></pre>
-
-<p>将会匹配到：</p>
-
-<pre><code>a3ob
-</code></pre>
-
-<p>其实不同的地方就是 <code>*</code>号后多了个 <code>?</code> 号。
-<code>*? +? ?? {m,n}? 的作用是把* + ? {m,n}变成非贪婪模式。
-</code></p>
+<p><img src="http://bcs.duapp.com/picfile/2013/4/57d5ba0fb0df4ac7.png" alt="proxy info" /></p>
 </div>
 
 
   
   <p>
 	作者：<a href="http://hswg.info" title="横竖弯钩">横竖弯钩 </a><br />
-	原文地址：<a href="http://hswg.info/blog/2013/01/30/regex-greedy-and-non-greedy-mode/" title="正则表达式的贪婪与非贪婪模式">http://hswg.info/blog/2013/01/30/regex-greedy-and-non-greedy-mode/</a>
+	原文地址：<a href="http://hswg.info/blog/2013/04/24/ec2-s-fare/" title="EC2产生费用了——源于匿名代理">http://hswg.info/blog/2013/04/24/ec2-s-fare/</a>
   </p>
   
   <footer>
@@ -167,7 +140,7 @@
   
 
 
-<time datetime="2013-01-30T20:06:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+<time datetime="2013-04-24T11:12:00+08:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time>
       
 
 
@@ -182,10 +155,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/29/use-python-fetch-webpage/" title="Previous Post: Python抓取网页">&laquo; Python抓取网页</a>
+        <a class="basic-alignment left" href="/blog/2013/04/20/setup-proxy-server-on-ubuntu/" title="Previous Post: ubuntu下搭建代理服务器">&laquo; ubuntu下搭建代理服务器</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/02/04/use-baidu-translate-api-by-python/" title="Next Post: Python使用百度翻译API">Python使用百度翻译API &raquo;</a>
       
     </p>
   </footer>
