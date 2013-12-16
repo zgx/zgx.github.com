@@ -4,7 +4,7 @@
   <title><![CDATA[横竖弯钩]]></title>
   <link href="http://hswg.info/atom.xml" rel="self"/>
   <link href="http://hswg.info/"/>
-  <updated>2013-04-27T10:00:21+08:00</updated>
+  <updated>2013-12-16T10:48:20+08:00</updated>
   <id>http://hswg.info/</id>
   <author>
     <name><![CDATA[横竖弯钩]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[机器学习笔记]]></title>
+    <link href="http://hswg.info/blog/2013/06/05/machine-learning-note/"/>
+    <updated>2013-06-05T23:06:00+08:00</updated>
+    <id>http://hswg.info/blog/2013/06/05/machine-learning-note</id>
+    <content type="html"><![CDATA[<h3>机器学习定义</h3>
+
+<blockquote><p>对于某类任务T和性能度量P，如果一个计算机程序在T上以P衡量的性能随着
+经验E而自我完善，那我们称这个计算机程序在从经验E中学习。</p></blockquote>
+
+<h3>监督学习</h3>
+
+<blockquote><p>从给定的训练数据集中学习出一个函数，当新的数据到来时，可以根据这个
+函数预测结果。监督学习的训练集要求是包括输入和输出，也可以说是特征
+和目标。训练集的目标是认为标注的结果。常见的监督学习算法包括回归分
+析和统计分类。</p></blockquote>
+
+<h3>无监督学习</h3>
+
+<blockquote><p>训练集没有认为标注的结果。常见的无监督学习算法有聚类。</p></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[EC2产生费用了——源于匿名代理]]></title>
@@ -1021,22 +1044,6 @@ Octopress当然没有对多说内置支持，不过在模板添加进去还是�
 <pre><code>import urllib2
 html = urllib2.openurl('http://website.xx').read()
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[使用Octopress写博客]]></title>
-    <link href="http://hswg.info/blog/2013/01/04/using-octopress/"/>
-    <updated>2013-01-04T14:50:00+08:00</updated>
-    <id>http://hswg.info/blog/2013/01/04/using-octopress</id>
-    <content type="html"><![CDATA[<p>用了一下,总结几点吧：</p>
-
-<ol>
-<li>在本地生成Html</li>
-<li>使用Jekyll生成</li>
-<li>不觉得比在Github用Jekyll输出高明多少</li>
-</ol>
-
 ]]></content>
   </entry>
   
